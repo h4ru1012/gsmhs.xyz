@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gsmhs
+  thymeleaf:
+    cache: false # 개발 중에만 false, 배포 시 true 권장
+  datasource:
+    url: jdbc:sqlite:${GSMHS_DB_PATH:gsmhs.db}
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+cloudflare:
+  # 둘 다 비어 있으면 DNS 연동 없이 동작 (로컬 개발 모드)
+  api-token: ${CF_API_TOKEN:}
+  zone-id: ${CF_ZONE_ID:}
+  base-domain: gsmhs.xyz
+  # true면 Cloudflare 프록시(주황 구름) 경유. GitHub Pages 연결 시엔 false 권장.
+  proxied: false
+
+datagsm:
+  oauth:
+    client-id: ${DATAGSM_CLIENT_ID}
+    client-secret: ${DATAGSM_CLIENT_SECRET}
+    authorization-base-url: https://oauth.authorization.datagsm.kr
+    user-info-base-url: https://oauth.resource.datagsm.kr
+    redirect-uri: ${DATAGSM_REDIRECT_URI:https://gsmhs.xyz/oauth/callback}
+    # scope는 선택 파라미터라 비워두면 서버가 클라이언트에 등록된 기본 권한(self_read)을 적용한다.
+    # self_read/self:read 표기가 문서마다 달라 값을 직접 보내는 대신 아예 생략해 모호성을 없앤다.
+    scope: ${DATAGSM_SCOPE:}

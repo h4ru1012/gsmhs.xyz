@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gsmhs.xyz</title>
+    <style>
+        :root {
+            --bg: #0e1116;
+            --surface: #171c24;
+            --border: #2a3240;
+            --text: #e8ecf1;
+            --muted: #8b95a5;
+            --accent: #4f8cff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Pretendard", -apple-system, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .domain {
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+        .account {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .account a { color: var(--muted); }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+        h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+        .sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+        .error {
+            background: rgba(255, 92, 92, 0.1);
+            border: 1px solid rgba(255, 92, 92, 0.35);
+            color: #ff8f8f;
+            font-size: 13px;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            background: var(--accent);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 13px 22px;
+            border-radius: 10px;
+            transition: opacity 0.15s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { opacity: 0.88; }
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+        .btn.block { display: block; width: 100%; }
+        .profile {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+        }
+        .profile .who { font-size: 17px; font-weight: 700; }
+        .profile .meta {
+            font-family: ui-monospace, monospace;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+        .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .project {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .project .name-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .project .name {
+            font-size: 15px;
+            font-weight: 700;
+            word-break: break-all;
+        }
+        .badge {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 2px 8px;
+            white-space: nowrap;
+        }
+        .project .subdomain {
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 13px;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+        .project .subdomain a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .project .subdomain a:hover { text-decoration: underline; }
+        .project .desc {
+            font-size: 13.5px;
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .project .meta {
+            font-size: 12px;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .project .meta a { color: var(--muted); }
+        .project .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .mini-btn {
+            font-size: 12px;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 5px 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: inherit;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .mini-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .mini-btn.primary { border-color: var(--accent); color: var(--accent); }
+        .mini-btn.primary:hover { background: rgba(79, 140, 255, 0.1); }
+        .mini-btn.danger:hover { border-color: #ff5c5c; color: #ff8f8f; }
+        .empty {
+            color: var(--muted);
+            font-size: 14px;
+            padding: 12px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <span class="domain">gsmhs.xyz</span>
+        <div class="account" th:if="${user != null}">
+            <span th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
+            <a href="/logout">로그아웃</a>
+        </div>
+        <div class="account" th:if="${user == null}">
+            <a href="/login">DataGSM으로 로그인</a>
+        </div>
+    </header>
+
+    <div th:if="${errorMessage}" class="error" th:text="${errorMessage}"></div>
+
+    <!-- 로그인 전 -->
+    <main class="card" th:if="${user == null}">
+        <h1>내 서브도메인 만들기</h1>
+        <p class="sub">GSM 학생이라면 누구나 무료로 서브도메인을 신청할 수 있어요.<br>DataGSM 계정으로 로그인해 주세요.</p>
+        <a class="btn" href="/login">DataGSM으로 로그인</a>
+    </main>
+
+    <!-- 로그인 후 -->
+    <main class="card" th:if="${user != null}">
+        <h1>환영합니다</h1>
+        <p class="sub">로그인 정보가 확인되었습니다.</p>
+        <div class="profile">
+            <span class="who" th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
+            <span class="meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.major}">학번 1101 · SW_DEVELOPMENT</span>
+        </div>
+        <div class="actions">
+            <a class="btn" href="/projects/new">서브도메인 신청하기</a>
+        </div>
+    </main>
+
+    <section class="card">
+        <h2>등록된 프로젝트</h2>
+        <div class="projects" th:if="${not #lists.isEmpty(projects)}">
+            <div class="project" th:each="project : ${projects}">
+                <div class="name-row">
+                    <span class="name" th:text="${project.displayTitle}">프로젝트 이름</span>
+                    <span class="badge" th:if="${!project.isPublic()}">비공개</span>
+                </div>
+                <div class="subdomain">
+                    <a th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener"
+                       th:text="${project.subdomain} + '.gsmhs.xyz'">example.gsmhs.xyz</a>
+                </div>
+                <div class="desc" th:if="${not #strings.isEmpty(project.description)}"
+                     th:text="${project.description}">프로젝트 소개</div>
+                <div class="meta">
+                    <span th:text="${project.ownerName}">1학년 1반 1번 홍길동</span>
+                    <a th:if="${project.githubUrl}" th:href="${project.githubUrl}" target="_blank" rel="noopener">GitHub →</a>
+                </div>
+                <div class="card-actions">
+                    <a class="mini-btn primary" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'"
+                       target="_blank" rel="noopener">열기</a>
+                    <th:block th:if="${user != null and project.isOwnedBy(user.email)}">
+                        <a class="mini-btn" th:href="'/projects/' + ${project.id} + '/edit'">수정</a>
+                        <form th:action="'/projects/' + ${project.id} + '/delete'" method="post"
+                              onsubmit="return confirm('정말 삭제할까요? DNS 레코드도 함께 삭제됩니다.');">
+                            <button type="submit" class="mini-btn danger">삭제</button>
+                        </form>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요. 첫 번째로 등록해 보세요!</p>
+    </section>
+</div>
+</body>
+</html>

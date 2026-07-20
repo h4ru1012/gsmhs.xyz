@@ -6,7 +6,7 @@
     <title>관리자 — gsmhs.xyz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0e1116;
@@ -25,7 +25,6 @@
             padding: 40px 24px;
             display: flex;
             flex-direction: column;
-            font-weight: 300;
         }
         .page { max-width: 1200px; margin: 0 auto; flex: 1; width: 100%; }
         header {
@@ -37,7 +36,7 @@
             gap: 16px;
         }
         .domain {
-            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-family: inherit;
             font-size: 15px;
             color: var(--accent);
             letter-spacing: 0.04em;
@@ -90,7 +89,7 @@
             font-weight: 600;
             font-size: 12px;
         }
-        td.mono, th.mono { font-family: ui-monospace, monospace; font-size: 12px; }
+        td.mono, th.mono { font-family: inherit; font-size: 12px; }
         td .muted { color: var(--muted); }
         .badge {
             font-size: 10.5px;

@@ -11,7 +11,7 @@ spring:
   thymeleaf:
     cache: false # 개발 중에만 false, 배포 시 true 권장
   datasource:
-    url: jdbc:sqlite:${GSMHS_DB_PATH:gsmhs.db}
+    url: jdbc:sqlite:${GSMHS_DB_PATH:gsmhs.xyz.db}
     driver-class-name: org.sqlite.JDBC
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect

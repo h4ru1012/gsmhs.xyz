@@ -50,7 +50,7 @@ src/main/resources/
 - 로그인한 학생만 `/projects/new`에서 등록 가능 (서브도메인, CNAME 대상 호스트, 소개, 깃허브 링크 입력)
 - 등록 즉시 승인 절차 없이 메인 페이지(허브)에 공개됨
 - 본인이 등록한 프로젝트만 수정/삭제 가능 (DataGSM 계정 이메일로 소유자 판별)
-- 데이터는 SQLite(`gsmhs.db`, 프로젝트 루트에 생성됨)에 저장 — `GSMHS_DB_PATH` 환경변수로 경로 변경 가능
+- 데이터는 SQLite(`gsmhs.xyz.db`, 프로젝트 루트에 생성됨)에 저장 — `GSMHS_DB_PATH` 환경변수로 경로 변경 가능
 - 서브도메인은 영문 소문자/숫자/하이픈만 허용, 중복 및 예약어(www, oauth, api 등) 체크
 
 ## Cloudflare DNS 연동

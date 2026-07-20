@@ -43,4 +43,18 @@ public class HomeController {
 
         return "index";
     }
+
+    @GetMapping("/tos")
+    public String termsOfService(HttpSession session, Model model) {
+        SessionUser user = (SessionUser) session.getAttribute(AuthController.SESSION_USER);
+        model.addAttribute("user", user);
+        return "tos";
+    }
+
+    @GetMapping("/privacy")
+    public String privacyPolicy(HttpSession session, Model model) {
+        SessionUser user = (SessionUser) session.getAttribute(AuthController.SESSION_USER);
+        model.addAttribute("user", user);
+        return "privacy";
+    }
 }

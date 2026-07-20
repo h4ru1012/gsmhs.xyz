@@ -6,7 +6,7 @@
     <title>gsmhs.xyz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0e1116;
@@ -23,10 +23,15 @@
             color: var(--text);
             min-height: 100vh;
             padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            font-weight: 300;
         }
         .page {
             max-width: 960px;
             margin: 0 auto;
+            flex: 1;
+            width: 100%;
         }
         header {
             display: flex;
@@ -191,6 +196,29 @@
             font-size: 14px;
             padding: 12px 0;
         }
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 40px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -263,5 +291,14 @@
         <p class="empty" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요. 첫 번째로 등록해 보세요!</p>
     </section>
 </div>
+
+<footer>
+    <div class="footer-links">
+        <a href="/">홈</a>
+        <a href="/tos">이용약관</a>
+        <a href="/privacy">개인정보 보호정책</a>
+    </div>
+    <p>&copy; 2026 gsmhs.xyz. All rights reserved.</p>
+</footer>
 </body>
 </html>

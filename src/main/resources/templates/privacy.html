@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인정보 보호정책 - gsmhs.xyz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0e1116;
+            --surface: #171c24;
+            --border: #2a3240;
+            --text: #e8ecf1;
+            --muted: #8b95a5;
+            --accent: #4f8cff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Noto Sans KR", "Noto Sans CJK KR", -apple-system, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .domain {
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+        .account {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .account a { color: var(--muted); text-decoration: none; }
+        .account a:hover { text-decoration: underline; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; margin-top: 24px; }
+        p { font-size: 14px; line-height: 1.8; margin-bottom: 16px; color: var(--text); }
+        ul { margin-left: 24px; margin-bottom: 16px; }
+        li { font-size: 14px; line-height: 1.8; margin-bottom: 8px; }
+        .table-container { overflow-x: auto; margin-bottom: 16px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td { padding: 12px; border: 1px solid var(--border); text-align: left; }
+        th { background: rgba(79, 140, 255, 0.1); font-weight: 600; }
+        .updated { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: auto;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <span class="domain">gsmhs.xyz</span>
+        <div class="account" th:if="${user != null}">
+            <span th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
+            <a href="/admin" th:if="${user.admin}">관리자</a>
+            <a href="/logout">로그아웃</a>
+        </div>
+        <div class="account" th:if="${user == null}">
+            <a href="/login">DataGSM으로 로그인</a>
+        </div>
+    </header>
+
+    <main class="card">
+        <h1>개인정보 보호정책</h1>
+        <p class="updated">최종 업데이트: 2024년 7월</p>
+
+        <h2>제1조 개인정보 수집 방식</h2>
+        <p>본 서비스는 다음과 같은 방식으로 개인정보를 수집합니다.</p>
+        <ul>
+            <li>DataGSM OAuth 로그인 시: 사용자 동의 하에 학생 정보 수신</li>
+            <li>프로젝트 등록 시: 서브도메인, GitHub URL 등 사용자 입력 정보</li>
+            <li>서비스 이용 기록: 로그인 로그, 접근 시간 등</li>
+        </ul>
+
+        <h2>제2조 수집되는 개인정보</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>수집 항목</th>
+                        <th>수집 방식</th>
+                        <th>수집 목적</th>
+                        <th>보관 기간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>학생 정보</strong><br>• 이메일<br>• 이름<br>• 학년, 반, 번호<br>• 학번<br>• 전공</td>
+                        <td>DataGSM OAuth</td>
+                        <td>• 사용자 인증<br>• 프로젝트 소유권 판별<br>• 관리자 페이지 통계<br>• 학년별 최신 정보 갱신</td>
+                        <td>서비스 이용 기간 및 이후 6개월</td>
+                    </tr>
+                    <tr>
+                        <td><strong>로그인 기록</strong><br>• 첫 로그인 시각<br>• 마지막 로그인 시각<br>• 로그인 횟수</td>
+                        <td>자동 기록</td>
+                        <td>서비스 이용 현황 파악</td>
+                        <td>서비스 이용 기간 및 이후 1년</td>
+                    </tr>
+                    <tr>
+                        <td><strong>프로젝트 정보</strong><br>• 서브도메인명<br>• GitHub Pages URL<br>• 프로젝트 설명<br>• 공개/비공개 여부</td>
+                        <td>사용자 입력</td>
+                        <td>프로젝트 관리 및 허브 페이지 표시</td>
+                        <td>프로젝트 삭제 시까지</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DNS 레코드</strong><br>• Cloudflare 레코드 ID</td>
+                        <td>Cloudflare API</td>
+                        <td>DNS 레코드 관리 및 삭제</td>
+                        <td>프로젝트 삭제 시까지</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>제3조 개인정보 처리 및 보관</h2>
+        <p><strong>저장 위치:</strong> SQLite 데이터베이스 (NAS 로컬 저장소)</p>
+        <p><strong>보안 조치:</strong></p>
+        <ul>
+            <li>개인정보 접근은 관리자에게만 제한</li>
+            <li>네트워크 격리: 로컬 NAS 환경에서만 실행</li>
+            <li>HTTPS 암호화 통신 (SSL/TLS)</li>
+            <li>정기적인 백업</li>
+        </ul>
+
+        <h2>제4조 개인정보 사용 목적</h2>
+        <ul>
+            <li><strong>서비스 제공:</strong> 로그인 인증, 프로젝트 관리, DNS 자동 설정</li>
+            <li><strong>서비스 개선:</strong> 이용 통계 분석, 기능 개선</li>
+            <li><strong>관리 목적:</strong> 부정 이용 방지, 약관 위반 적발</li>
+            <li><strong>안내:</strong> 서비스 공지사항, 정책 변경 안내 (필요 시)</li>
+        </ul>
+
+        <h2>제5조 개인정보 제3자 제공</h2>
+        <p>본 서비스는 이용자의 개인정보를 제3자에게 제공하지 않습니다. 단, 다음의 경우는 예외입니다.</p>
+        <ul>
+            <li>법령의 규정에 따른 요구</li>
+            <li>범죄 수사 협력</li>
+            <li>이용자가 명시적으로 동의한 경우</li>
+        </ul>
+
+        <h2>제6조 외부 서비스 연동</h2>
+        <p>본 서비스는 다음의 외부 서비스와 연동됩니다.</p>
+        <ul>
+            <li><strong>DataGSM:</strong> 학생 인증 정보 제공 (OAuth 프로토콜)</li>
+            <li><strong>Cloudflare:</strong> DNS 레코드 관리 (API 연동)</li>
+            <li><strong>GitHub:</strong> 사용자가 입력한 GitHub Pages URL (사용자 책임)</li>
+        </ul>
+        <p>각 외부 서비스의 개인정보 정책은 해당 서비스의 정책을 따릅니다.</p>
+
+        <h2>제7조 데이터 삭제 및 수정</h2>
+        <p>이용자는 다음의 권리를 행사할 수 있습니다.</p>
+        <ul>
+            <li><strong>프로젝트 삭제:</strong> 언제든지 자신의 프로젝트를 삭제할 수 있습니다.</li>
+            <li><strong>계정 삭제 요청:</strong> 관리자에게 문의하여 계정 및 관련 데이터 삭제를 요청할 수 있습니다.</li>
+            <li><strong>정보 수정:</strong> 프로젝트 정보는 자유롭게 수정할 수 있습니다. 학생 정보는 DataGSM을 통해 최신화됩니다.</li>
+        </ul>
+
+        <h2>제8조 쿠키 및 추적 기술</h2>
+        <p>본 서비스는 세션 관리를 위해 HTTP 세션을 사용하지만, 추적 목적의 쿠키를 사용하지 않습니다.</p>
+
+        <h2>제9조 미성년자 보호</h2>
+        <p>본 서비스는 미성년자(14세 이상 18세 미만)를 주 대상으로 하므로, 부모/보호자의 동의가 필요할 수 있습니다. 본인의 동의 없이 타인의 정보를 제공하거나 사용하는 것은 금지됩니다.</p>
+
+        <h2>제10조 정책 변경</h2>
+        <p>본 정책은 서비스 개선 및 법적 요구에 따라 변경될 수 있습니다. 주요 변경 사항은 서비스 내에서 사전 공지합니다.</p>
+
+        <h2>제11조 문의</h2>
+        <p>개인정보 보호와 관련된 문의 또는 권리 행사를 원하시면 관리자에게 문의해 주시기 바랍니다.</p>
+    </main>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="/">홈</a>
+        <a href="/tos">이용약관</a>
+        <a href="/privacy">개인정보 보호정책</a>
+    </div>
+    <p>&copy; 2024 gsmhs.xyz. All rights reserved.</p>
+</footer>
+</body>
+</html>

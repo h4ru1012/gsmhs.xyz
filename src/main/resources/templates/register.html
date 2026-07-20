@@ -23,9 +23,14 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+        main {
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+            flex: 1;
         }
         .card {
             width: 100%;
@@ -117,6 +122,28 @@
             color: var(--muted);
             margin-top: 10px;
         }
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -181,5 +208,14 @@
         <a class="btn secondary" href="/">취소</a>
     </form>
 </main>
+
+<footer>
+    <div class="footer-links">
+        <a href="/">홈</a>
+        <a href="/tos">이용약관</a>
+        <a href="/privacy">개인정보 보호정책</a>
+    </div>
+    <p>&copy; 2024 gsmhs.xyz. All rights reserved.</p>
+</footer>
 </body>
 </html>

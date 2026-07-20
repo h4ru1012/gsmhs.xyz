@@ -23,8 +23,10 @@
             color: var(--text);
             min-height: 100vh;
             padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
         }
-        .page { max-width: 1200px; margin: 0 auto; }
+        .page { max-width: 1200px; margin: 0 auto; flex: 1; width: 100%; }
         header {
             display: flex;
             align-items: center;
@@ -119,6 +121,29 @@
         .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
         a { color: var(--accent); }
         td a.plain { color: var(--muted); }
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 40px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -226,5 +251,14 @@
         </div>
     </section>
 </div>
+
+<footer>
+    <div class="footer-links">
+        <a href="/">홈</a>
+        <a href="/tos">이용약관</a>
+        <a href="/privacy">개인정보 보호정책</a>
+    </div>
+    <p>&copy; 2024 gsmhs.xyz. All rights reserved.</p>
+</footer>
 </body>
 </html>

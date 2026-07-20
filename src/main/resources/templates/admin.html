@@ -185,7 +185,7 @@
                 <tr th:each="row : ${userRows}">
                     <td th:text="${row.user.displayName}">2학년 3반 4번 홍길동</td>
                     <td class="mono" th:text="${row.user.studentNumber}">2304</td>
-                    <td class="mono" th:text="${row.user.major}">SMART_IOT</td>
+                    <td th:text="${row.user.majorLabel}">스마트IoT과</td>
                     <td class="mono" th:text="${row.user.email}">student@gsm.hs.kr</td>
                     <td th:text="${row.projectCount}">1</td>
                     <td class="mono" th:text="${row.user.firstLoginAtText}">2026-07-15 15:00</td>

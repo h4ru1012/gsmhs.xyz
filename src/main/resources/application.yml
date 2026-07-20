@@ -2,6 +2,10 @@ server:
   port: 8080
 
 spring:
+  config:
+    # 프로젝트 루트의 .env 파일을 properties 형식으로 읽는다 (없으면 무시).
+    # OS 환경변수가 설정돼 있으면 .env보다 우선한다.
+    import: "optional:file:.env[.properties]"
   application:
     name: gsmhs
   thymeleaf:

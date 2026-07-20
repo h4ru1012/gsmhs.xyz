@@ -5,14 +5,13 @@ Spring Boot 4.1 + Thymeleaf + DataGSM OAuth SDK 기반.
 ## 실행 방법
 
 1. JDK 25 설치 확인: `java -version`
-2. 환경변수 설정:
+2. 환경변수 설정: `.env.example`을 `.env`로 복사하고 값 채우기
    ```bash
-   export DATAGSM_CLIENT_ID="774e66a4-0115-44b4-9637-a65b798f7b6e"
-   export DATAGSM_CLIENT_SECRET="발급받은-시크릿"
-   # 로컬 테스트용 (DataGSM 클라이언트에 이 URI도 등록해야 함)
-   export DATAGSM_REDIRECT_URI="http://localhost:8080/oauth/callback"
+   cp .env.example .env
+   # DATAGSM_CLIENT_SECRET 등 실제 값 입력
    ```
-3. 실행: `./gradlew bootRun` (gradle wrapper가 없으면 `gradle bootRun` 또는 IntelliJ에서 실행)
+   `.env`는 git에 커밋되지 않으며, OS 환경변수가 있으면 그쪽이 우선한다.
+3. 실행: `./gradlew bootRun` (또는 IntelliJ에서 실행 — 별도 환경변수 설정 불필요)
 4. http://localhost:8080 접속 → "DataGSM으로 로그인" 클릭
 
 ## 구조

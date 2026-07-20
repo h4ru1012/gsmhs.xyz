@@ -12,7 +12,7 @@ Spring Boot 4.1 + Thymeleaf + DataGSM OAuth SDK 기반.
    ```
    `.env`는 git에 커밋되지 않으며, OS 환경변수가 있으면 그쪽이 우선한다.
 3. 실행: `./gradlew bootRun` (또는 IntelliJ에서 실행 — 별도 환경변수 설정 불필요)
-4. http://localhost:8080 접속 → "DataGSM으로 로그인" 클릭
+4. https://gsmhs.xyz (로컬 실행 시 http://localhost:8080) 접속 → "DataGSM으로 로그인" 클릭
 
 ## 구조
 

@@ -35,6 +35,7 @@ public class SessionUser implements Serializable {
     public int getNumber() { return number; }
     public int getStudentNumber() { return studentNumber; }
     public String getMajor() { return major; }
+    public String getMajorLabel() { return xyz.gsmhs.domain.Major.labelOf(major); }
     public String getEmail() { return email; }
     public boolean isAdmin() { return admin; }
 

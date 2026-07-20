@@ -95,6 +95,7 @@ public class AppUser {
     public int getNumber() { return number; }
     public int getStudentNumber() { return studentNumber; }
     public String getMajor() { return major; }
+    public String getMajorLabel() { return Major.labelOf(major); }
     public Instant getFirstLoginAt() { return firstLoginAt; }
     public Instant getLastLoginAt() { return lastLoginAt; }
     public long getLoginCount() { return loginCount; }

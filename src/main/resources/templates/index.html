@@ -250,7 +250,7 @@
         <p class="sub">로그인 정보가 확인되었습니다.</p>
         <div class="profile">
             <span class="who" th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
-            <span class="meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.major}">학번 1101 · SW_DEVELOPMENT</span>
+            <span class="meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.majorLabel}">학번 1101 · 소프트웨어개발과</span>
         </div>
         <div class="actions">
             <a class="btn" href="/projects/new">서브도메인 등록하기</a>

@@ -7,9 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Project {
+
+    private static final DateTimeFormatter DATE_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withZone(ZoneId.of("Asia/Seoul"));
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +81,10 @@ public class Project {
     /** 표시용 이름 — 이름이 없던 초기 데이터는 서브도메인으로 대체 */
     public String getDisplayTitle() {
         return name == null || name.isBlank() ? subdomain : name;
+    }
+
+    public String getCreatedAtText() {
+        return DATE_FORMAT.format(createdAt);
     }
 
     public Long getId() { return id; }

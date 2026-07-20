@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 — gsmhs.xyz</title>
+    <style>
+        :root {
+            --bg: #0e1116;
+            --surface: #171c24;
+            --border: #2a3240;
+            --text: #e8ecf1;
+            --muted: #8b95a5;
+            --accent: #4f8cff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Pretendard", -apple-system, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+        .page { max-width: 1200px; margin: 0 auto; }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .domain {
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+        .domain .tag {
+            color: var(--muted);
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        header a { color: var(--muted); font-size: 13px; }
+        .summary {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .chip b { color: var(--text); font-size: 16px; margin-right: 4px; }
+        .chip.ok b { color: #6fd392; }
+        .chip.off b { color: #ff8f8f; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        th, td {
+            text-align: left;
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 12px;
+        }
+        td.mono, th.mono { font-family: ui-monospace, monospace; font-size: 12px; }
+        td .muted { color: var(--muted); }
+        .badge {
+            font-size: 10.5px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 2px 8px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .badge.public { color: #6fd392; border-color: rgba(111, 211, 146, 0.4); }
+        .desc-cell {
+            max-width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mini-btn {
+            font-size: 12px;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .mini-btn.danger:hover { border-color: #ff5c5c; color: #ff8f8f; }
+        .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
+        a { color: var(--accent); }
+        td a.plain { color: var(--muted); }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <span class="domain">gsmhs.xyz<span class="tag">관리자</span></span>
+        <a href="/">← 메인으로</a>
+    </header>
+
+    <div class="summary">
+        <div class="chip"><b th:text="${#lists.size(userRows)}">0</b>사용자</div>
+        <div class="chip"><b th:text="${#lists.size(projects)}">0</b>프로젝트</div>
+        <div class="chip"><b th:text="${publicCount}">0</b>공개</div>
+        <div class="chip"><b th:text="${privateCount}">0</b>비공개</div>
+        <div class="chip" th:classappend="${dnsEnabled} ? 'ok' : 'off'">
+            <b th:text="${dnsEnabled} ? 'ON' : 'OFF'">ON</b>Cloudflare DNS
+        </div>
+    </div>
+
+    <section class="card">
+        <h2>사용자</h2>
+        <p class="empty" th:if="${#lists.isEmpty(userRows)}">아직 로그인한 사용자가 없어요.</p>
+        <div class="table-wrap" th:if="${not #lists.isEmpty(userRows)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>학번</th>
+                    <th>학과</th>
+                    <th>이메일</th>
+                    <th>프로젝트</th>
+                    <th>첫 로그인</th>
+                    <th>마지막 로그인</th>
+                    <th>로그인 수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${userRows}">
+                    <td th:text="${row.user.displayName}">2학년 3반 4번 홍길동</td>
+                    <td class="mono" th:text="${row.user.studentNumber}">2304</td>
+                    <td class="mono" th:text="${row.user.major}">SMART_IOT</td>
+                    <td class="mono" th:text="${row.user.email}">student@gsm.hs.kr</td>
+                    <td th:text="${row.projectCount}">1</td>
+                    <td class="mono" th:text="${row.user.firstLoginAtText}">2026-07-15 15:00</td>
+                    <td class="mono" th:text="${row.user.lastLoginAtText}">2026-07-16 09:00</td>
+                    <td th:text="${row.user.loginCount}">3</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>프로젝트</h2>
+        <p class="empty" th:if="${#lists.isEmpty(projects)}">등록된 프로젝트가 없어요.</p>
+        <div class="table-wrap" th:if="${not #lists.isEmpty(projects)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>서브도메인</th>
+                    <th>CNAME 대상</th>
+                    <th>공개</th>
+                    <th>소유자</th>
+                    <th>이메일</th>
+                    <th>소개</th>
+                    <th>GitHub</th>
+                    <th class="mono">CF 레코드</th>
+                    <th>등록일</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${projects}">
+                    <td th:text="${p.displayTitle}">프로젝트</td>
+                    <td class="mono">
+                        <a th:href="'https://' + ${p.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener"
+                           th:text="${p.subdomain}">sub</a>
+                    </td>
+                    <td class="mono" th:text="${p.cnameTarget}">username.github.io</td>
+                    <td>
+                        <span class="badge public" th:if="${p.isPublic()}">공개</span>
+                        <span class="badge" th:if="${!p.isPublic()}">비공개</span>
+                    </td>
+                    <td th:text="${p.ownerName}">2학년 3반 4번 홍길동</td>
+                    <td class="mono" th:text="${p.ownerEmail}">student@gsm.hs.kr</td>
+                    <td class="desc-cell" th:text="${p.description}" th:title="${p.description}"></td>
+                    <td>
+                        <a class="plain" th:if="${p.githubUrl}" th:href="${p.githubUrl}" target="_blank"
+                           rel="noopener">링크</a>
+                        <span class="muted" th:if="${p.githubUrl == null}">—</span>
+                    </td>
+                    <td class="mono" th:text="${p.cfRecordId != null ? p.cfRecordId : '—'}">—</td>
+                    <td class="mono" th:text="${p.createdAtText}">2026-07-16 10:00</td>
+                    <td>
+                        <form th:action="'/projects/' + ${p.id} + '/delete'" method="post" style="display:inline"
+                              onsubmit="return confirm('이 프로젝트를 삭제할까요? DNS 레코드도 함께 삭제됩니다.');">
+                            <input type="hidden" name="from" value="admin">
+                            <button type="submit" class="mini-btn danger">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

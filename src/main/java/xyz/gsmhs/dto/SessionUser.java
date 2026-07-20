@@ -15,9 +15,10 @@ public class SessionUser implements Serializable {
     private final int studentNumber;
     private final String major;
     private final String email; // 소유자 판별용 DataGSM 계정 이메일
+    private final boolean admin; // 로그인 시점에 ADMIN_EMAILS 기준으로 판별
 
     public SessionUser(String name, int grade, int classNum, int number, int studentNumber,
-                       String major, String email) {
+                       String major, String email, boolean admin) {
         this.name = name;
         this.grade = grade;
         this.classNum = classNum;
@@ -25,6 +26,7 @@ public class SessionUser implements Serializable {
         this.studentNumber = studentNumber;
         this.major = major;
         this.email = email;
+        this.admin = admin;
     }
 
     public String getName() { return name; }
@@ -34,6 +36,7 @@ public class SessionUser implements Serializable {
     public int getStudentNumber() { return studentNumber; }
     public String getMajor() { return major; }
     public String getEmail() { return email; }
+    public boolean isAdmin() { return admin; }
 
     /** "1학년 2반 3번 홍길동" 형태의 표시용 문자열 */
     public String getDisplayName() {

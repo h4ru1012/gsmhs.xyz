@@ -196,6 +196,7 @@
         <span class="domain">gsmhs.xyz</span>
         <div class="account" th:if="${user != null}">
             <span th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
+            <a href="/admin" th:if="${user.admin}">관리자</a>
             <a href="/logout">로그아웃</a>
         </div>
         <div class="account" th:if="${user == null}">

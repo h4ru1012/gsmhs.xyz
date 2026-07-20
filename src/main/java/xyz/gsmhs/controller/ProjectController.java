@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import xyz.gsmhs.domain.Project;
 import xyz.gsmhs.dto.SessionUser;
 import xyz.gsmhs.repository.ProjectRepository;
+import xyz.gsmhs.service.AdminService;
 import xyz.gsmhs.service.CloudflareDnsService;
 import xyz.gsmhs.service.DnsException;
 
@@ -27,10 +28,13 @@ public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final CloudflareDnsService dnsService;
+    private final AdminService adminService;
 
-    public ProjectController(ProjectRepository projectRepository, CloudflareDnsService dnsService) {
+    public ProjectController(ProjectRepository projectRepository, CloudflareDnsService dnsService,
+                             AdminService adminService) {
         this.projectRepository = projectRepository;
         this.dnsService = dnsService;
+        this.adminService = adminService;
     }
 
     /* ---------- 등록 ---------- */
@@ -167,20 +171,24 @@ public class ProjectController {
     /* ---------- 삭제 ---------- */
 
     @PostMapping("/projects/{id}/delete")
-    public String deleteProject(@PathVariable Long id, HttpSession session) {
+    public String deleteProject(@PathVariable Long id,
+                                @RequestParam(required = false) String from,
+                                HttpSession session) {
         SessionUser user = currentUser(session);
         if (user == null) {
             return "redirect:/login";
         }
+        // 소유자 또는 관리자만 삭제 가능
+        boolean isAdmin = adminService.isAdmin(user.getEmail());
         Project project = projectRepository.findById(id).orElse(null);
-        if (project == null || !project.isOwnedBy(user.getEmail())) {
+        if (project == null || (!project.isOwnedBy(user.getEmail()) && !isAdmin)) {
             return "redirect:/?error=not_owner";
         }
 
         dnsService.deleteRecord(project.getCfRecordId());
         projectRepository.delete(project);
 
-        return "redirect:/";
+        return "admin".equals(from) && isAdmin ? "redirect:/admin" : "redirect:/";
     }
 
     /* ---------- 헬퍼 ---------- */

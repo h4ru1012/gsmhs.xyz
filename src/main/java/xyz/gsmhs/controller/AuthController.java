@@ -13,9 +13,13 @@ import team.themoment.datagsm.sdk.oauth.model.Student;
 import team.themoment.datagsm.sdk.oauth.model.TokenResponse;
 import team.themoment.datagsm.sdk.oauth.model.UserInfo;
 import xyz.gsmhs.config.DataGsmOAuthConfig.DataGsmOAuthProperties;
+import xyz.gsmhs.domain.AppUser;
 import xyz.gsmhs.dto.SessionUser;
+import xyz.gsmhs.repository.AppUserRepository;
+import xyz.gsmhs.service.AdminService;
 
 import java.security.SecureRandom;
+import java.time.Instant;
 import java.util.Base64;
 
 @Controller
@@ -29,11 +33,16 @@ public class AuthController {
 
     private final DataGsmOAuthClient oauthClient;
     private final DataGsmOAuthProperties properties;
+    private final AppUserRepository appUserRepository;
+    private final AdminService adminService;
     private final SecureRandom secureRandom = new SecureRandom();
 
-    public AuthController(DataGsmOAuthClient oauthClient, DataGsmOAuthProperties properties) {
+    public AuthController(DataGsmOAuthClient oauthClient, DataGsmOAuthProperties properties,
+                          AppUserRepository appUserRepository, AdminService adminService) {
         this.oauthClient = oauthClient;
         this.properties = properties;
+        this.appUserRepository = appUserRepository;
+        this.adminService = adminService;
     }
 
     /** 1단계: DataGSM 로그인 페이지로 리다이렉트 */
@@ -88,6 +97,7 @@ public class AuthController {
             }
 
             Student student = userInfo.getStudent();
+            String email = userInfo.getEmail();
             SessionUser user = new SessionUser(
                     student.getName(),
                     student.getGrade(),
@@ -95,9 +105,11 @@ public class AuthController {
                     student.getNumber(),
                     student.getStudentNumber(),
                     String.valueOf(student.getMajor()),
-                    userInfo.getEmail()
+                    email,
+                    adminService.isAdmin(email)
             );
             session.setAttribute(SESSION_USER, user);
+            recordLogin(user);
 
             return "redirect:/";
 
@@ -112,6 +124,25 @@ public class AuthController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+
+    /** 관리자 페이지용 사용자 기록 upsert. 실패해도 로그인 흐름은 막지 않는다. */
+    private void recordLogin(SessionUser user) {
+        try {
+            Instant now = Instant.now();
+            AppUser appUser = appUserRepository.findByEmailIgnoreCase(user.getEmail()).orElse(null);
+            if (appUser == null) {
+                appUser = new AppUser(user.getEmail(), user.getName(), user.getGrade(),
+                        user.getClassNum(), user.getNumber(), user.getStudentNumber(),
+                        user.getMajor(), now);
+            } else {
+                appUser.recordLogin(user.getName(), user.getGrade(), user.getClassNum(),
+                        user.getNumber(), user.getStudentNumber(), user.getMajor(), now);
+            }
+            appUserRepository.save(appUser);
+        } catch (Exception e) {
+            log.warn("로그인 기록 저장 실패: {}", e.getMessage());
+        }
     }
 
     private String generateRandomToken() {

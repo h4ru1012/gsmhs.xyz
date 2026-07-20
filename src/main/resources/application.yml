@@ -19,6 +19,10 @@ spring:
       ddl-auto: update
     open-in-view: false
 
+app:
+  # 관리자로 취급할 DataGSM 계정 이메일 목록 (쉼표 구분)
+  admin-emails: ${ADMIN_EMAILS:}
+
 cloudflare:
   # 둘 다 비어 있으면 DNS 연동 없이 동작 (로컬 개발 모드)
   api-token: ${CF_API_TOKEN:}

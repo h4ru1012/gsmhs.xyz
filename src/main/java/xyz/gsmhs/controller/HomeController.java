@@ -36,6 +36,7 @@ public class HomeController {
                 case "not_student" -> "학생 계정으로만 로그인할 수 있습니다.";
                 case "oauth_failed" -> "로그인 중 문제가 발생했습니다. 다시 시도해 주세요.";
                 case "not_owner" -> "본인이 등록한 프로젝트만 수정하거나 삭제할 수 있어요.";
+                case "forbidden" -> "접근 권한이 없어요.";
                 default -> "알 수 없는 오류가 발생했습니다.";
             });
         }

@@ -7,7 +7,7 @@ spring:
     # OS 환경변수가 설정돼 있으면 .env보다 우선한다.
     import: "optional:file:.env[.properties]"
   application:
-    name: gsmhs
+    name: gsmhs.xyz
   thymeleaf:
     cache: false # 개발 중에만 false, 배포 시 true 권장
   datasource:

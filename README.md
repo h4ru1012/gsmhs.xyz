@@ -1,4 +1,4 @@
-# gsmhs.xyz — GSM 학생 서브도메인 신청 사이트
+# gsmhs.xyz — GSM 학생 서브도메인 등록 사이트
 
 Spring Boot 4.1 + Thymeleaf + DataGSM OAuth SDK 기반.
 
@@ -25,7 +25,7 @@ src/main/java/xyz/gsmhs/
 ├── controller/
 │   ├── AuthController.java        # /login, /oauth/callback, /logout
 │   ├── HomeController.java        # / (허브 페이지: 로그인 상태 + 등록된 프로젝트 목록)
-│   └── ProjectController.java     # 서브도메인 신청/수정/삭제
+│   └── ProjectController.java     # 서브도메인 등록/수정/삭제
 ├── domain/Project.java            # 등록된 프로젝트 엔티티
 ├── repository/ProjectRepository.java
 ├── service/CloudflareDnsService.java # CNAME 레코드 생성/갱신/삭제
@@ -35,7 +35,7 @@ src/main/resources/
 ├── application.yml                # 설정 (secret은 환경변수로, DB는 SQLite)
 └── templates/
     ├── index.html                 # 허브 페이지
-    └── register.html              # 서브도메인 신청 폼
+    └── register.html              # 서브도메인 등록 폼
 ```
 
 ## OAuth 흐름
@@ -45,17 +45,17 @@ src/main/resources/
 3. state 검증(CSRF 방지) → SDK로 code + verifier 토큰 교환 → userinfo 조회
 4. 학생 정보(이름/학년/반/번호/학번/학과)를 세션에 저장 → `/`로 리다이렉트
 
-## 서브도메인 신청 / 수정 / 삭제
+## 서브도메인 등록 / 수정 / 삭제
 
-- 로그인한 학생만 `/projects/new`에서 신청 가능 (서브도메인, CNAME 대상 호스트, 소개, 깃허브 링크 입력)
-- 신청 즉시 승인 절차 없이 메인 페이지(허브)에 공개됨
+- 로그인한 학생만 `/projects/new`에서 등록 가능 (서브도메인, CNAME 대상 호스트, 소개, 깃허브 링크 입력)
+- 등록 즉시 승인 절차 없이 메인 페이지(허브)에 공개됨
 - 본인이 등록한 프로젝트만 수정/삭제 가능 (DataGSM 계정 이메일로 소유자 판별)
 - 데이터는 SQLite(`gsmhs.db`, 프로젝트 루트에 생성됨)에 저장 — `GSMHS_DB_PATH` 환경변수로 경로 변경 가능
 - 서브도메인은 영문 소문자/숫자/하이픈만 허용, 중복 및 예약어(www, oauth, api 등) 체크
 
 ## Cloudflare DNS 연동
 
-신청/수정/삭제 시 `{subdomain}.gsmhs.xyz` CNAME 레코드를 Cloudflare API로 자동 관리한다.
+등록/수정/삭제 시 `{subdomain}.gsmhs.xyz` CNAME 레코드를 Cloudflare API로 자동 관리한다.
 
 - 환경변수 `CF_API_TOKEN`, `CF_ZONE_ID` 둘 다 설정돼 있어야 동작. **비어 있으면 DNS 연동 없이
   DB에만 저장**(로컬 개발 모드) — 이때 등록된 프로젝트는 나중에 수정 시점에 레코드가 생성됨.

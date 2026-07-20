@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle} + ' — gsmhs.xyz'">서브도메인 신청 — gsmhs.xyz</title>
+    <title th:text="${pageTitle} + ' — gsmhs.xyz'">서브도메인 등록 — gsmhs.xyz</title>
     <style>
         :root {
             --bg: #0e1116;
@@ -118,22 +118,22 @@
 </head>
 <body>
 <main class="card">
-    <h1 th:text="${pageTitle}">서브도메인 신청</h1>
-    <p class="sub">등록 즉시 DNS 레코드가 설정됩니다. 공개로 등록하면 메인 페이지에도 표시돼요.</p>
+    <h1 th:text="${pageTitle}">서브도메인 등록</h1>
+    <p class="sub">등록 즉시 DNS 레코드가 설정됩니다.</p>
 
     <div th:if="${errorMessage}" class="error" th:text="${errorMessage}"></div>
 
     <form method="post" th:action="@{${formAction}}">
         <div class="field">
             <label for="name">프로젝트 이름</label>
-            <input type="text" id="name" name="name" placeholder="내 멋진 프로젝트"
+            <input type="text" id="name" name="name" placeholder="프로젝트"
                    th:value="${project.name}" maxlength="50" required>
         </div>
 
         <div class="field">
             <label for="subdomain">서브도메인</label>
             <div class="subdomain-row">
-                <input type="text" id="subdomain" name="subdomain" placeholder="myproject"
+                <input type="text" id="subdomain" name="subdomain" placeholder="project"
                        th:value="${project.subdomain}" pattern="[a-z0-9-]+" required>
                 <span class="suffix">.gsmhs.xyz</span>
             </div>
@@ -141,7 +141,7 @@
 
         <div class="field">
             <label for="cnameTarget">연결할 호스트 (CNAME 대상)</label>
-            <input type="text" id="cnameTarget" name="cnameTarget" placeholder="username.github.io"
+            <input type="text" id="cnameTarget" name="cnameTarget" placeholder="username.example.com"
                    th:value="${project.cnameTarget}" required>
             <p class="hint">
                 GitHub Pages, Vercel 같은 호스팅의 도메인을 입력하세요. 경로(/...)는 쓸 수 없어요.<br>
@@ -156,7 +156,7 @@
         </div>
 
         <div class="field">
-            <label for="githubUrl">깃허브 링크 (선택)</label>
+            <label for="githubUrl">GitHub 링크 (선택)</label>
             <input type="url" id="githubUrl" name="githubUrl" placeholder="https://github.com/me/my-project"
                    th:value="${project.githubUrl}">
         </div>
@@ -174,7 +174,7 @@
             <p class="hint">비공개로 하면 메인 페이지 목록에 표시되지 않아요. DNS 연결은 동일하게 동작합니다.</p>
         </div>
 
-        <button type="submit" class="btn" th:text="${submitLabel}">신청하기</button>
+        <button type="submit" class="btn" th:text="${submitLabel}">등록하기</button>
         <a class="btn secondary" href="/">취소</a>
     </form>
 </main>

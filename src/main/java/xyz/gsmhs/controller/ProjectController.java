@@ -33,14 +33,14 @@ public class ProjectController {
         this.dnsService = dnsService;
     }
 
-    /* ---------- 신청 ---------- */
+    /* ---------- 등록 ---------- */
 
     @GetMapping("/projects/new")
     public String newProjectForm(HttpSession session, Model model) {
         if (currentUser(session) == null) {
             return "redirect:/login";
         }
-        prepareForm(model, new ProjectForm(), "/projects", "서브도메인 신청", "신청하기");
+        prepareForm(model, new ProjectForm(), "/projects", "서브도메인 등록", "등록하기");
         return "register";
     }
 
@@ -65,7 +65,7 @@ public class ProjectController {
 
         String errorMessage = validate(normalizedSubdomain, normalizedHost, name, null);
         if (errorMessage != null) {
-            prepareForm(model, form, "/projects", "서브도메인 신청", "신청하기");
+            prepareForm(model, form, "/projects", "서브도메인 등록", "등록하기");
             model.addAttribute("errorMessage", errorMessage);
             return "register";
         }
@@ -74,7 +74,7 @@ public class ProjectController {
         try {
             recordId = dnsService.createCname(normalizedSubdomain, normalizedHost);
         } catch (DnsException e) {
-            prepareForm(model, form, "/projects", "서브도메인 신청", "신청하기");
+            prepareForm(model, form, "/projects", "서브도메인 등록", "등록하기");
             model.addAttribute("errorMessage", "DNS 레코드 생성에 실패했어요: " + e.getMessage());
             return "register";
         }

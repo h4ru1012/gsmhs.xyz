@@ -208,7 +208,7 @@
     <!-- 로그인 전 -->
     <main class="card" th:if="${user == null}">
         <h1>내 서브도메인 만들기</h1>
-        <p class="sub">GSM 학생이라면 누구나 무료로 서브도메인을 신청할 수 있어요.<br>DataGSM 계정으로 로그인해 주세요.</p>
+        <p class="sub">GSM 학생이라면 누구나 무료로 서브도메인을 등록할 수 있어요.<br>DataGSM 계정으로 로그인해 주세요.</p>
         <a class="btn" href="/login">DataGSM으로 로그인</a>
     </main>
 
@@ -221,7 +221,7 @@
             <span class="meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.major}">학번 1101 · SW_DEVELOPMENT</span>
         </div>
         <div class="actions">
-            <a class="btn" href="/projects/new">서브도메인 신청하기</a>
+            <a class="btn" href="/projects/new">서브도메인 등록하기</a>
         </div>
     </main>
 

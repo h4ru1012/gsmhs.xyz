@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Cloudflare DNS 레코드 관리.
- * 서브도메인 신청/수정/삭제 시 {subdomain}.gsmhs.xyz CNAME 레코드를 함께 관리한다.
+ * 서브도메인 등록/수정/삭제 시 {subdomain}.gsmhs.xyz CNAME 레코드를 함께 관리한다.
  * 토큰이 설정되지 않은 로컬 환경에서는 아무것도 하지 않는다.
  */
 @Service

@@ -1,5 +1,7 @@
 server:
   port: 8080
+  # 재시작/배포 시 처리 중인 요청을 마치고 종료
+  shutdown: graceful
   # nginx 등 리버스 프록시 뒤에서 X-Forwarded-*(스킴/호스트/클라이언트 IP)를 신뢰
   forward-headers-strategy: framework
   servlet:

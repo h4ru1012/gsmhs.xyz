@@ -23,19 +23,24 @@ src/main/java/xyz/gsmhs/
 │   ├── DataGsmOAuthConfig.java    # SDK 클라이언트 Bean 등록 + 설정 프로퍼티
 │   └── CloudflareConfig.java      # Cloudflare 설정 프로퍼티
 ├── controller/
-│   ├── AuthController.java        # /login, /oauth/callback, /logout
-│   ├── HomeController.java        # / (허브 페이지: 로그인 상태 + 등록된 프로젝트 목록)
-│   └── ProjectController.java     # 서브도메인 등록/수정/삭제
-├── domain/Project.java            # 등록된 프로젝트 엔티티
-├── repository/ProjectRepository.java
-├── service/CloudflareDnsService.java # CNAME 레코드 생성/갱신/삭제
+│   ├── AuthController.java        # /login, /oauth/callback, /logout(POST)
+│   ├── HomeController.java        # / (허브), /tos, /privacy
+│   ├── ProjectController.java     # 서브도메인 등록/수정/삭제
+│   └── AdminController.java       # /admin (관리자 대시보드)
+├── domain/
+│   ├── Project.java               # 등록된 프로젝트 엔티티
+│   ├── AppUser.java               # 로그인 기록 (관리자 페이지용)
+│   └── Major.java                 # 학과 코드 → 한글 학과명 매핑
+├── repository/                    # ProjectRepository, AppUserRepository
+├── service/
+│   ├── CloudflareDnsService.java  # CNAME 레코드 생성/갱신/삭제
+│   └── AdminService.java          # ADMIN_EMAILS 기반 관리자 판별
 └── dto/SessionUser.java           # 세션에 저장하는 학생 정보
 
 src/main/resources/
 ├── application.yml                # 설정 (secret은 환경변수로, DB는 SQLite)
-└── templates/
-    ├── index.html                 # 허브 페이지
-    └── register.html              # 서브도메인 등록 폼
+├── static/                        # favicon.svg, robots.txt
+└── templates/                     # index, register, admin, tos, privacy, error
 ```
 
 ## OAuth 흐름
@@ -65,6 +70,45 @@ src/main/resources/
 - CNAME 방식이므로 학생은 자기 호스팅(GitHub Pages, Vercel 등)의 커스텀 도메인 설정에
   `{subdomain}.gsmhs.xyz`를 등록해야 실제 연결이 완성됨.
 - `cloudflare.proxied`(기본 false)를 켜면 Cloudflare 프록시 경유. GitHub Pages는 false 권장.
+
+## 프로덕션 배포 (NAS)
+
+NAS의 JDK 25(temurin) 컨테이너에서 직접 빌드·실행하는 방식.
+
+```bash
+git clone https://github.com/h4ru1012/gsmhs.xyz.git && cd gsmhs.xyz
+cp .env.example .env   # 실제 값 입력 (DATAGSM_CLIENT_ID/SECRET, CF_API_TOKEN/ZONE_ID, ADMIN_EMAILS)
+./gradlew build -x test
+java -jar build/libs/gsmhs.xyz-0.0.1-SNAPSHOT.jar
+```
+
+- ⚠️ **반드시 저장소 루트에서 실행**할 것. `.env`는 `spring.config.import: optional:file:.env`로
+  **현재 작업 디렉터리 기준**으로 읽힌다. 다른 디렉터리에서 실행하면 `.env`가 무시되어
+  로그인 URL에 `${DATAGSM_CLIENT_ID}`가 그대로 노출된다.
+  다른 위치에서 실행해야 한다면 `export $(grep -v '^#' /path/to/.env | xargs)` 후 실행.
+- 업데이트 배포: `git pull && ./gradlew build -x test` 후 프로세스 재시작
+  (`server.shutdown: graceful`이라 처리 중 요청은 마치고 종료됨).
+- DB(`gsmhs.xyz.db`)는 실행 디렉터리에 생성됨 — 백업 대상. `GSMHS_DB_PATH`로 경로 지정 가능.
+
+### 리버스 프록시 (nginx)
+
+라즈베리파이 nginx → `앱호스트:8080`. HTTPS 종료는 nginx(Let's Encrypt 와일드카드)에서 하고,
+앱은 `forward-headers-strategy: framework`로 `X-Forwarded-*`를 신뢰하므로 nginx 설정에 다음이 필요:
+
+```nginx
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+```
+
+### 배포 전 체크리스트
+
+- [ ] `./gradlew build -x test` 통과
+- [ ] `.env` 실제 값 채움 (secret은 git에 절대 커밋 금지)
+- [ ] 로컬 http 테스트 시에만 `SESSION_COOKIE_SECURE=false` — **운영에선 제거**(기본 true)
+- [ ] DataGSM 클라이언트에 운영 리다이렉트 URI(`https://gsmhs.xyz/oauth/callback`) 등록 확인
+- [ ] 로그인 → 등록 → 수정 → 삭제 → 관리자 페이지 스모크 테스트
+- [ ] `https://gsmhs.xyz/tos`, `/privacy`, `/robots.txt`, `/favicon.svg` 응답 확인
 
 ## 주의사항
 

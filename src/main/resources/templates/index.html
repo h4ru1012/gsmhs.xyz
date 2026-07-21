@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>gsmhs.xyz — GSM 서브도메인 허브</title>
+<title>GSMHS.xyz — GSM 서브도메인 허브</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -241,7 +241,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
     <nav class="header-nav">
       <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button>
       <div class="user-pill" th:if="${user != null}">
-        <span class="avatar" th:text="${#strings.substring(user.displayName,0,1)}">홍</span>
+        <span class="avatar" th:text="${user.initial}">홍</span>
         <b th:text="${user.displayName}">홍길동</b>
       </div>
       <a class="nav-link" th:if="${user != null and user.admin}" href="/admin">관리자</a>
@@ -271,7 +271,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
 
       <aside class="side-card" th:if="${user != null}">
         <div class="side-card-top">
-          <span class="avatar avatar-lg" th:text="${#strings.substring(user.displayName,0,1)}">홍</span>
+          <span class="avatar avatar-lg" th:text="${user.initial}">홍</span>
           <div>
             <div class="side-name" th:text="${user.displayName}">홍길동</div>
             <div class="side-status">로그인됨 · DataGSM</div>
@@ -313,8 +313,6 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
 
     <div class="filters" role="tablist" aria-label="필터">
       <button type="button" class="chip active" data-filter="all">전체</button>
-      <button type="button" class="chip" data-filter="public">공개</button>
-      <button type="button" class="chip" data-filter="private">비공개</button>
       <button type="button" class="chip" data-filter="mine" th:if="${user != null}">내 프로젝트</button>
     </div>
 
@@ -332,7 +330,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
         <p class="card-desc" th:if="${not #strings.isEmpty(project.description)}" th:text="${project.description}">나를 소개하는 개인 포트폴리오와 기술 블로그입니다.</p>
         <div class="card-foot">
           <div class="owner">
-            <span class="avatar owner-avatar" th:text="${#strings.substring(project.ownerName,0,1)}">홍</span>
+            <span class="avatar owner-avatar" th:text="${project.ownerInitial}">홍</span>
             <span th:text="${project.ownerName}">홍길동</span>
           </div>
           <div class="card-actions">
@@ -384,7 +382,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
   </div>
 </main>
 <footer class="site-footer"><div class="container footer-inner">
-    <p class="copyright">&copy; 2026 gsmhs.xyz. All rights reserved.</p>
+    <p class="copyright">&copy; 2026 GSMHS.xyz. All rights reserved.</p>
     <nav class="footer-nav"><a href="/">홈</a><a href="/tos">이용약관</a><a href="/privacy">개인정보 보호정책</a></nav>
   </div></footer>
 <script>
@@ -402,7 +400,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
     cards.forEach(function(c){
       var pub=c.getAttribute('data-public')==='true';
       var mine=c.getAttribute('data-owned')==='true';
-      var okMode=mode==='all'||(mode==='public'&&pub)||(mode==='private'&&!pub)||(mode==='mine'&&mine);
+      var okMode=mode==='all'||(mode==='mine'&&mine&&!pub);
       var hay=(c.getAttribute('data-search')||c.textContent||'').toLowerCase();
       var okQ=!q||hay.indexOf(q)>-1;
       var show=okMode&&okQ;

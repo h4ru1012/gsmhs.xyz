@@ -83,6 +83,17 @@ public class Project {
         return name == null || name.isBlank() ? subdomain : name;
     }
 
+    /** 아바타 표시용 — 소유자 이름의 성(첫 글자). ownerName은 "2학년 3반 4번 홍길동" 형태라 마지막 공백 뒤 이름에서 뽑는다. */
+    public String getOwnerInitial() {
+        if (ownerName == null || ownerName.isBlank()) {
+            return "";
+        }
+        String trimmed = ownerName.trim();
+        int lastSpace = trimmed.lastIndexOf(' ');
+        String namePart = lastSpace >= 0 ? trimmed.substring(lastSpace + 1) : trimmed;
+        return namePart.isEmpty() ? "" : namePart.substring(0, 1);
+    }
+
     public String getCreatedAtText() {
         return DATE_FORMAT.format(createdAt);
     }

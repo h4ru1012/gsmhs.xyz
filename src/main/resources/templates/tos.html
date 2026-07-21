@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>이용약관 — gsmhs.xyz</title>
+<title>이용약관 — GSMHS.xyz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -35,8 +35,8 @@ html[data-theme="light"]{color-scheme:light}
 }
 .theme-toggle{flex:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--border-2);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--text-2);transition:border-color .15s,color .15s}
 .theme-toggle:hover{border-color:var(--text-3);color:var(--text)}
-.theme-toggle-icon{width:15px;height:15px;border-radius:50%;background:currentColor;box-shadow:inset -5px -4px 0 -1px var(--surface)}
-[data-theme="light"] .theme-toggle-icon{width:11px;height:11px;box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px currentColor}
+.theme-toggle-icon{font-size:15px;line-height:1}.theme-toggle-icon::before{content:"\263E\FE0E"}
+[data-theme="light"] .theme-toggle-icon::before{content:"\2600\FE0E"}
 html[data-theme="light"] body{}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
 main{flex:1;width:100%}
@@ -237,7 +237,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
 </head>
 <body>
 <header class="site-header"><div class="container header-inner">
-    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">g</span>gsmhs<span class="brand-tld">.xyz</span></a></span>
+    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">G</span>GSMHS<span class="brand-tld">.xyz</span></a></span>
     <nav class="header-nav"><button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button>
       <div class="user-chip" th:if="${user != null}">
         <span class="user-name" th:text="${user.displayName}">김수한</span>
@@ -257,7 +257,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
     <!-- TODO: 아래 본문은 초안입니다. 운영 중인 실제 약관 조항으로 교체하세요. 레이아웃(h2/p/ol)만 유지하면 됩니다. -->
     <article class="prose">
       <h2>제1조 (목적)</h2>
-      <p>이 약관은 gsmhs.xyz(이하 "서비스")가 제공하는 서브도메인 등록 및 연결 기능의 이용 조건과 절차, 이용자와 운영자의 권리·의무를 규정함을 목적으로 합니다.</p>
+      <p>이 약관은 GSMHS.xyz(이하 "서비스")가 제공하는 서브도메인 등록 및 연결 기능의 이용 조건과 절차, 이용자와 운영자의 권리·의무를 규정함을 목적으로 합니다.</p>
       <h2>제2조 (정의)</h2>
       <ol>
         <li>"서비스"란 광주소프트웨어마이스터고등학교 구성원이 <strong>이름.gsmhs.xyz</strong> 형태의 서브도메인을 등록하고 GitHub Pages, Vercel 등 외부 호스팅에 연결할 수 있도록 제공되는 기능 일체를 말합니다.</li>
@@ -310,7 +310,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
   </div>
 </main>
 <footer class="site-footer"><div class="container footer-inner">
-    <p class="copyright">&copy; 2026 gsmhs.xyz. All rights reserved.</p>
+    <p class="copyright">&copy; 2026 GSMHS.xyz. All rights reserved.</p>
     <nav class="footer-nav"><a href="/">홈</a><a href="/tos">이용약관</a><a href="/privacy">개인정보 보호정책</a></nav>
   </div></footer>
 

@@ -43,4 +43,9 @@ public class SessionUser implements Serializable {
     public String getDisplayName() {
         return grade + "학년 " + classNum + "반 " + number + "번 " + name;
     }
+
+    /** 아바타 표시용 — 이름의 첫 글자(성) */
+    public String getInitial() {
+        return name == null || name.isBlank() ? "" : name.trim().substring(0, 1);
+    }
 }

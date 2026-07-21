@@ -52,9 +52,9 @@ a:hover{color:var(--text-2)}
 /* header */
 .site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
-.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.brand{display:inline-flex;align-items:center;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.02em}
 .brand:hover{color:var(--text)}
-.brand-mark{width:20px;height:20px;border-radius:6px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:800;font-family:var(--mono)}
+.brand-mark{width:20px;height:20px;margin-right:9px;border-radius:6px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:800;font-family:var(--mono)}
 .brand-tld{color:var(--text-3)}
 .brand-side{display:inline-flex;align-items:center;gap:11px}
 .mode-chip{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--text-2);border:1px solid var(--border-2);background:var(--surface);padding:2px 8px;border-radius:6px}
@@ -237,7 +237,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
 </head>
 <body>
 <header class="site-header"><div class="container header-inner">
-    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>gsmhs<span class="brand-tld">.xyz</span></a></span>
+    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">g</span>gsmhs<span class="brand-tld">.xyz</span></a></span>
     <nav class="header-nav"><button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button><a class="nav-link" href="/">홈으로</a></nav>
   </div></header>
 <main>

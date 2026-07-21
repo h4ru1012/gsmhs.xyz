@@ -10,101 +10,136 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0b0e14;--surface:#121826;--surface-2:#1a2234;--inset:#0d121c;
-  --border:#1f2939;--border-2:#2b3a55;
-  --text:#e8edf6;--text-2:#9aa7bd;--text-3:#7d8aa0;
-  --accent:#6ea6ff;--accent-solid:#2563eb;--accent-solid-2:#3b76f0;--accent-dim:rgba(110,166,255,.1);
-  --green:#3ecf8e;--red:#f47171;--red-dim:rgba(244,113,113,.09);
+  --bg:#0a0a0a;--surface:#141414;--surface-2:#1c1c1c;--inset:#0f0f0f;
+  --border:#262626;--border-2:#383838;
+  --text:#f5f5f5;--text-2:#a3a3a3;--text-3:#6f6f6f;
+  --accent:#f5f5f5;--accent-dim:rgba(255,255,255,.06);
+  --btn-bg:#f5f5f5;--btn-fg:#0a0a0a;
+  --header-bg:rgba(10,10,10,.82);
+  --grid-line:rgba(255,255,255,.045);
   --sans:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
   --mono:'Noto Sans Mono','Noto Sans KR',monospace;
-  --r:14px;--r-s:9px;--ring:0 0 0 3px rgba(110,166,255,.22);
+  --r:14px;--r-s:9px;--ring:0 0 0 3px rgba(255,255,255,.14);
 }
 html{color-scheme:dark}
+html[data-theme="light"]{color-scheme:light}
+[data-theme="light"]{
+  --bg:#ffffff;--surface:#ffffff;--surface-2:#f4f4f4;--inset:#fafafa;
+  --border:#e8e8e8;--border-2:#d6d6d6;
+  --text:#141414;--text-2:#5c5c5c;--text-3:#8a8a8a;
+  --accent:#141414;--accent-dim:rgba(0,0,0,.045);
+  --btn-bg:#141414;--btn-fg:#ffffff;
+  --header-bg:rgba(255,255,255,.85);
+  --grid-line:rgba(0,0,0,.045);
+  --ring:0 0 0 3px rgba(0,0,0,.14);
+}
+.theme-toggle{flex:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--border-2);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--text-2);transition:border-color .15s,color .15s}
+.theme-toggle:hover{border-color:var(--text-3);color:var(--text)}
+.theme-toggle-icon{width:15px;height:15px;border-radius:50%;background:currentColor;box-shadow:inset -5px -4px 0 -1px var(--surface)}
+[data-theme="light"] .theme-toggle-icon{width:11px;height:11px;box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px currentColor}
+html[data-theme="light"] body{}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
 main{flex:1;width:100%}
-a{color:var(--accent);text-decoration:none;transition:color .15s}
-a:hover{color:#9dc1ff}
-::selection{background:rgba(80,140,255,.4)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+a{color:var(--text);text-decoration:none;transition:color .15s}
+a:hover{color:var(--text-2)}
+::selection{background:var(--text);color:var(--bg)}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px;border-radius:4px}
 .mono{font-family:var(--mono)}
-.container{width:100%;max-width:1064px;margin:0 auto;padding:0 24px}
+.container{width:100%;max-width:1120px;margin:0 auto;padding:0 24px}
 .container-narrow{max-width:648px}
-.container-wide{max-width:1320px}
+.container-wide{max-width:1340px}
 .container-prose{max-width:768px}
 /* header */
-.site-header{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.02em}
 .brand:hover{color:var(--text)}
-.brand-mark{width:11px;height:11px;border-radius:3px;background:linear-gradient(135deg,#8cb8ff,#2563eb);box-shadow:0 0 12px rgba(80,140,255,.55)}
-.brand-tld{color:var(--accent)}
-.brand-side{display:inline-flex;align-items:center;gap:10px}
-.mode-chip{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--accent);border:1px solid rgba(110,166,255,.35);background:var(--accent-dim);padding:2px 8px;border-radius:6px}
-.header-nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
-.user-chip{display:flex;align-items:center;gap:14px;font-size:13.5px}
-.user-name{font-weight:700;display:inline-flex;align-items:center;gap:7px}
-.user-name::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
+.brand-mark{width:20px;height:20px;border-radius:6px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:800;font-family:var(--mono)}
+.brand-tld{color:var(--text-3)}
+.brand-side{display:inline-flex;align-items:center;gap:11px}
+.mode-chip{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--text-2);border:1px solid var(--border-2);background:var(--surface);padding:2px 8px;border-radius:6px}
+.header-nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
 .nav-link{color:var(--text-2);font-size:13.5px}
 .nav-link:hover{color:var(--text)}
+.user-pill{display:inline-flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border-2);border-radius:999px;padding:4px 13px 4px 5px;font-size:13.5px}
+.user-pill .avatar{width:26px;height:26px;font-size:12px}
+.user-pill b{font-weight:700}
+/* avatar */
+.avatar{border-radius:50%;background:var(--surface-2);border:1px solid var(--border-2);display:grid;place-items:center;font-weight:700;color:var(--text-2);flex:none;font-family:var(--sans)}
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid transparent;border-radius:var(--r-s);font-family:var(--sans);font-weight:700;font-size:14px;line-height:1.5;padding:9px 18px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn-primary{background:var(--accent-solid);color:#fff}
-.btn-primary:hover{background:var(--accent-solid-2);color:#fff}
-.btn-lg{font-size:15.5px;padding:13px 28px;border-radius:11px}
+.btn-primary{background:var(--btn-bg);color:var(--btn-fg)}
+.btn-primary:hover{opacity:.85;color:var(--btn-fg)}
+.btn-block{width:100%}
+.btn-lg{font-size:15px;padding:12px 24px;border-radius:11px}
 .btn-sm{font-size:13px;padding:6px 14px}
 .btn-xs{font-size:12px;padding:4px 11px;border-radius:7px}
-.btn-ghost{background:transparent;border-color:var(--border-2);color:var(--text-2)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--text);background:var(--accent-dim)}
-.btn-danger{background:transparent;border-color:rgba(244,113,113,.35);color:var(--red)}
-.btn-danger:hover{background:var(--red-dim);color:var(--red)}
+.btn-ghost{background:transparent;border-color:var(--border-2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--text-3);color:var(--text);background:var(--accent-dim)}
+.btn-danger{background:transparent;border-color:var(--border-2);color:var(--text-2)}
+.btn-danger:hover{background:var(--accent-dim);color:var(--text);border-color:var(--text-3)}
 /* alert / badge */
-.alert{display:flex;gap:11px;align-items:flex-start;border:1px solid rgba(244,113,113,.35);background:var(--red-dim);border-radius:var(--r-s);padding:13px 16px;margin-top:24px;font-size:14px;color:#ffc9c9}
-.alert-icon{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;background:rgba(244,113,113,.18);color:var(--red);font-weight:700;font-size:12px;display:grid;place-items:center;font-family:var(--mono)}
-.badge{flex:none;display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2.5px 9px;border-radius:999px;letter-spacing:.02em;line-height:1.6}
-.badge-private{color:var(--text-2);background:rgba(154,167,189,.12);border:1px solid rgba(154,167,189,.3)}
-.badge-public{color:var(--green);background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.3)}
+.alert{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--border-2);background:var(--surface-2);border-radius:var(--r-s);padding:13px 16px;margin-top:24px;font-size:14px;color:var(--text)}
+.alert-icon{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;background:var(--accent-dim);color:var(--text-2);font-weight:700;font-size:12px;display:grid;place-items:center;font-family:var(--mono)}
+.badge{flex:none;display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2.5px 10px;border-radius:999px;letter-spacing:.02em;line-height:1.6}
+.badge-public{color:var(--text);background:var(--accent-dim);border:1px solid var(--border-2)}
+.badge-private{color:var(--text-3);background:transparent;border:1px solid var(--border)}
 /* hero */
-.hero{position:relative;padding:82px 24px 58px;text-align:center}
-.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(140,170,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(140,170,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);pointer-events:none}
-.hero>*{position:relative}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-2);border:1px solid var(--border-2);border-radius:999px;padding:5px 14px;background:rgba(18,24,38,.7)}
-.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
-.hero-title{font-size:clamp(30px,5.4vw,49px);font-weight:900;line-height:1.24;letter-spacing:-.035em;margin:22px 0 16px}
-.hero-title .grad{font-family:var(--mono);font-weight:700;font-size:.94em;letter-spacing:-.045em;background:linear-gradient(100deg,#d3e2ff 10%,#6ea6ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-sub{max-width:540px;margin:0 auto 30px;color:var(--text-2);font-size:16px;text-wrap:pretty}
-.hero-actions{display:flex;justify-content:center;gap:12px;margin-bottom:46px}
-.dns-demo{display:inline-flex;align-items:center;gap:14px;padding:13px 20px;background:var(--inset);border:1px solid var(--border);border-radius:11px;font-family:var(--mono);font-size:13.5px;box-shadow:0 16px 44px rgba(0,0,0,.42);flex-wrap:wrap;justify-content:center}
-.dns-type{color:var(--green);font-weight:700;font-size:10.5px;letter-spacing:.1em;border:1px solid rgba(62,207,142,.3);padding:2px 8px;border-radius:5px;background:rgba(62,207,142,.08)}
-.dns-name{color:var(--text)}.dns-name b{color:var(--text-3);font-weight:400}
-.dns-arrow{color:var(--text-3)}
-.dns-target{color:var(--accent)}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;list-style:none;max-width:860px;margin:50px auto 0;text-align:left}
-.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
-.step-num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700;letter-spacing:.12em}
-.step b{display:block;font-size:14.5px;margin:8px 0 3px}
-.step p{font-size:13px;color:var(--text-2);line-height:1.55}
-/* logged-in card */
-.me-card{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px 28px;margin-top:36px}
-.me-name{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.35}
-.me-meta{color:var(--text-2);font-size:13.5px;margin-top:2px}
-/* projects */
-.section-head{display:flex;align-items:baseline;gap:10px;margin:54px 0 18px}
-.section-title{font-size:19px;font-weight:800;letter-spacing:-.01em}
-.count-chip{font-family:var(--mono);font-size:12px;color:var(--text-2);border:1px solid var(--border-2);padding:1px 9px;border-radius:999px;background:var(--surface)}
-.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.project-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .15s}
+.hero-wrap{position:relative}
+.hero-wrap::before{content:'';position:absolute;inset:-1px 0 auto 0;height:520px;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:38px 38px;-webkit-mask-image:radial-gradient(ellipse 90% 100% at 20% 0%,#000 10%,transparent 68%);mask-image:radial-gradient(ellipse 90% 100% at 20% 0%,#000 10%,transparent 68%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.35fr .95fr;gap:44px;align-items:center;padding:70px 0 30px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-2);border:1px solid var(--border-2);border-radius:999px;padding:5px 14px;background:var(--surface)}
+.eyebrow .star{color:var(--text);font-size:12px}
+.hero-title{font-size:clamp(30px,4.6vw,46px);font-weight:900;line-height:1.24;letter-spacing:-.035em;margin:22px 0 18px;text-wrap:balance}
+.hero-sub{max-width:520px;color:var(--text-2);font-size:15.5px;margin-bottom:28px;text-wrap:pretty}
+.hero-sub .dom{font-family:var(--mono);color:var(--text);font-size:.95em}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+/* side card */
+.side-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.side-card-top{display:flex;gap:13px;align-items:center;margin-bottom:20px}
+.avatar-lg{width:46px;height:46px;font-size:17px}
+.side-name{font-weight:800;font-size:16px;letter-spacing:-.01em}
+.side-status{font-size:12.5px;color:var(--text-3);display:flex;align-items:center;gap:6px;margin-top:2px}
+.side-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--text-2)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:18px}
+.info-cell{background:var(--inset);padding:13px 14px}
+.info-label{font-size:11px;color:var(--text-3);font-weight:600}
+.info-value{font-weight:700;margin-top:4px;font-size:14.5px;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.info-value.mono{font-family:var(--mono);font-size:14px}
+.side-lead{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:20px;text-wrap:pretty}
+/* directory */
+.dir-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:56px 0 18px}
+.dir-title{font-size:22px;font-weight:800;letter-spacing:-.015em}
+.dir-sub{color:var(--text-2);font-size:14px;margin-top:5px}
+.search{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border-2);border-radius:10px;padding:0 13px;min-width:270px;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:var(--text-3);box-shadow:var(--ring)}
+.search-ic{color:var(--text-3);font-size:16px;flex:none}
+.search input{background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:13.5px;width:100%;padding:10px 0}
+.search input::placeholder{color:var(--text-3)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{font-size:13px;font-weight:600;color:var(--text-2);background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 15px;cursor:pointer;transition:all .15s;font-family:var(--sans)}
+.chip:hover{color:var(--text);border-color:var(--border-2)}
+.chip.active{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
+/* project cards */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.project-card{display:flex;flex-direction:column;gap:11px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .15s,transform .15s}
 .project-card:hover{border-color:var(--border-2)}
 .card-top{display:flex;align-items:center;gap:9px;justify-content:space-between}
-.card-title{font-size:16px;font-weight:700;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card-domain{font-family:var(--mono);font-size:13px;display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:100%}
-.card-domain::after{content:'\2197';font-size:11px;color:var(--text-3)}
+.card-title{font-size:16px;font-weight:800;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-domain{font-family:var(--mono);font-size:13px;color:var(--text-2);display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:100%}
+.card-domain:hover{color:var(--text)}
+.card-domain .ext{font-size:11px;color:var(--text-3)}
 .card-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-foot{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;flex-wrap:wrap}
-.card-owner{color:var(--text-3);font-weight:500}
-.card-gh{font-family:var(--mono);font-size:11.5px;color:var(--text-2)}
-.card-btns{margin-left:auto;display:flex;gap:6px;align-items:center}
-.card-btns form{display:inline-flex;margin:0}
-.empty{border:1.5px dashed var(--border-2);border-radius:var(--r);padding:56px 24px;text-align:center;margin-top:16px}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+.owner{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);font-weight:600;min-width:0}
+.owner-avatar{width:23px;height:23px;font-size:11px}
+.owner span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-actions{display:flex;align-items:center;gap:4px;flex:none}
+.icon-btn{min-width:30px;height:30px;padding:0 8px;border-radius:8px;border:1px solid transparent;display:inline-grid;place-items:center;color:var(--text-3);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;background:none;font-family:var(--mono)}
+.icon-btn:hover{color:var(--text);background:var(--accent-dim)}
+.icon-btn.danger:hover{color:var(--text)}
+.card-actions form{display:inline-flex;margin:0}
+.empty{border:1.5px dashed var(--border-2);border-radius:var(--r);padding:56px 24px;text-align:center;margin-top:4px}
 .empty-mono{font-family:var(--mono);font-size:11.5px;color:var(--text-3);letter-spacing:.14em}
 .empty b{display:block;font-size:16px;margin:10px 0 4px}
 .empty p{font-size:13.5px;color:var(--text-2)}
@@ -116,11 +151,11 @@ a:hover{color:#9dc1ff}
 .form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:30px;margin:26px 0 64px;display:flex;flex-direction:column;gap:22px}
 .field{display:flex;flex-direction:column;gap:8px}
 .field-label{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px}
-.req{color:var(--accent)}
+.req{color:var(--text)}
 .opt{font-size:10.5px;color:var(--text-3);font-weight:500;border:1px solid var(--border);padding:0 7px;border-radius:999px}
 .control{width:100%;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);color:var(--text);font-family:var(--sans);font-size:14.5px;padding:10px 13px;transition:border-color .15s,box-shadow .15s}
 .control::placeholder{color:var(--text-3)}
-.control:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
+.control:focus{outline:none;border-color:var(--text-3);box-shadow:var(--ring)}
 textarea.control{resize:vertical;min-height:88px;line-height:1.6}
 .subdomain-group{display:flex;align-items:stretch}
 .subdomain-group .control{border-radius:var(--r-s) 0 0 var(--r-s);font-family:var(--mono);font-size:14px}
@@ -128,29 +163,32 @@ textarea.control{resize:vertical;min-height:88px;line-height:1.6}
 .hint{font-size:12.5px;color:var(--text-3);line-height:1.6}
 .hint code{font-family:var(--mono);color:var(--text-2);background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:11.5px}
 .preview-line{font-family:var(--mono);font-size:12.5px;color:var(--text-3)}
-.preview-line b{color:var(--accent);font-weight:500}
+.preview-line b{color:var(--text);font-weight:500}
 .radio-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .radio-card{display:flex;gap:11px;align-items:flex-start;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);padding:13px 14px;cursor:pointer;transition:border-color .15s,background .15s}
-.radio-card input{margin-top:4px;accent-color:var(--accent-solid);width:15px;height:15px;flex:none}
+.radio-card input{margin-top:4px;accent-color:var(--text);width:15px;height:15px;flex:none}
 .radio-card b{display:block;font-size:14px}
 .radio-card small{display:block;font-size:12px;color:var(--text-3);margin-top:1px;line-height:1.5}
-.radio-card:has(input:checked){border-color:var(--accent);background:var(--accent-dim)}
+.radio-card:has(input:checked){border-color:var(--text-3);background:var(--accent-dim)}
 .form-actions{display:flex;gap:10px;border-top:1px solid var(--border);padding-top:22px}
 /* admin */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:44px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 18px}
 .stat-label{font-size:12px;color:var(--text-3);font-weight:600}
 .stat-value{font-family:var(--mono);font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
-.stat-on{color:var(--green)}.stat-off{color:var(--red)}
+.stat-on{color:var(--text)}.stat-off{color:var(--text-3)}
 .admin-section{margin-bottom:48px}
+.section-head{display:flex;align-items:baseline;gap:10px;margin:0 0 16px}
+.section-title{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.count-chip{font-family:var(--mono);font-size:12px;color:var(--text-2);border:1px solid var(--border-2);padding:1px 9px;border-radius:999px;background:var(--surface)}
 .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow-x:auto}
 .table-wrap::-webkit-scrollbar{height:8px}
 .table-wrap::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
 .data-table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
-.data-table th{font-size:11.5px;color:var(--text-3);font-weight:700;letter-spacing:.04em;text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);background:rgba(13,18,28,.6)}
+.data-table th{font-size:11.5px;color:var(--text-3);font-weight:700;letter-spacing:.04em;text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--inset)}
 .data-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
 .data-table tbody tr:last-child td{border-bottom:0}
-.data-table tbody tr:hover{background:rgba(140,170,255,.03)}
+.data-table tbody tr:hover{background:var(--accent-dim)}
 .data-table form{display:inline-flex;margin:0}
 .tbl-users{min-width:940px}
 .tbl-projects{min-width:1280px}
@@ -161,7 +199,7 @@ textarea.control{resize:vertical;min-height:88px;line-height:1.6}
 .owner-email{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:1px}
 /* prose */
 .doc-head{margin:52px 0 34px;padding-bottom:26px;border-bottom:1px solid var(--border)}
-.doc-eyebrow{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.16em;font-weight:700}
+.doc-eyebrow{font-family:var(--mono);font-size:11.5px;color:var(--text-2);letter-spacing:.16em;font-weight:700}
 .doc-title{font-size:32px;font-weight:900;letter-spacing:-.02em;margin-top:10px}
 .doc-meta{font-size:12.5px;color:var(--text-3);margin-top:10px;font-family:var(--mono)}
 .prose{padding-bottom:28px}
@@ -174,32 +212,40 @@ textarea.control{resize:vertical;min-height:88px;line-height:1.6}
 .prose .data-table{white-space:normal;min-width:620px}
 .prose .data-table td{font-size:13px;color:var(--text-2);line-height:1.6}
 /* footer */
-.site-footer{border-top:1px solid var(--border);margin-top:72px;background:rgba(13,17,26,.5)}
+.site-footer{border-top:1px solid var(--border);margin-top:72px;background:var(--inset)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:26px 24px;flex-wrap:wrap}
 .copyright{font-size:12px;color:var(--text-3);font-family:var(--mono)}
 .footer-nav{display:flex;gap:22px;font-size:13px}
 .footer-nav a{color:var(--text-2)}
 .footer-nav a:hover{color:var(--text)}
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr;gap:28px;padding:48px 0 20px}
+  .hero-wrap::before{height:360px}
+}
 @media (max-width:720px){
-  .hero{padding:56px 16px 44px}
-  .steps{grid-template-columns:1fr;margin-top:38px}
-  .me-card{padding:22px}
   .form-card{padding:22px 18px}
   .radio-row{grid-template-columns:1fr}
   .footer-inner{justify-content:center;text-align:center}
-  .section-head{margin-top:42px}
+  .search{min-width:0;width:100%}
+  .dir-head{align-items:flex-start}
 }
 </style>
+<script>
+(function(){try{var t=localStorage.getItem('gsmhs-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',t);try{localStorage.setItem('gsmhs-theme',t);}catch(e){}}
+</script>
 </head>
 <body>
 <header class="site-header"><div class="container header-inner">
-    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>gsmhs<span class="brand-tld">.xyz</span></a></span>
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">g</span>gsmhs<span class="brand-tld">.xyz</span></a>
     <nav class="header-nav">
-      <div class="user-chip" th:if="${user != null}">
-        <span class="user-name" th:text="${user.displayName}">김수한</span>
-        <a class="nav-link" th:if="${user.admin}" href="/admin">관리자</a>
-        <a class="nav-link" href="/logout">로그아웃</a>
+      <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button>
+      <div class="user-pill" th:if="${user != null}">
+        <span class="avatar" th:text="${#strings.substring(user.displayName,0,1)}">홍</span>
+        <b th:text="${user.displayName}">홍길동</b>
       </div>
+      <a class="nav-link" th:if="${user != null and user.admin}" href="/admin">관리자</a>
+      <a class="nav-link" th:if="${user != null}" href="/logout">로그아웃</a>
       <a class="btn btn-primary btn-sm" th:if="${user == null}" href="/login">DataGSM으로 로그인</a>
     </nav>
   </div></header>
@@ -211,92 +257,167 @@ textarea.control{resize:vertical;min-height:88px;line-height:1.6}
     </div>
   </div>
 
-  <section class="hero" th:if="${user == null}">
-    <p class="hero-eyebrow">GSM 학생 전용 서브도메인 허브</p>
-    <h1 class="hero-title">내 프로젝트를 위한<br><span class="grad">이름.gsmhs.xyz</span></h1>
-    <p class="hero-sub">GitHub Pages·Vercel 배포에 CNAME 한 줄로 연결되는 무료 서브도메인. 광주소프트웨어마이스터고 학생이라면 누구나 만들 수 있어요.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/login">DataGSM으로 로그인</a></div>
-    <div class="dns-demo" aria-hidden="true">
-      <span class="dns-type">CNAME</span>
-      <span class="dns-name">suhan<b>.gsmhs.xyz</b></span>
-      <span class="dns-arrow">&rarr;</span>
-      <span class="dns-target">suhan.github.io</span>
-    </div>
-    <ol class="steps">
-      <li class="step"><span class="step-num">01</span><b>DataGSM으로 로그인</b><p>학교 계정으로 본인 확인 후 바로 시작해요.</p></li>
-      <li class="step"><span class="step-num">02</span><b>서브도메인 등록</b><p>원하는 이름과 CNAME 대상을 입력하면 DNS 레코드가 만들어져요.</p></li>
-      <li class="step"><span class="step-num">03</span><b>배포에 연결</b><p>GitHub Pages·Vercel에서 커스텀 도메인으로 추가하면 끝.</p></li>
-    </ol>
-  </section>
+  <div class="hero-wrap"><div class="container">
+    <section class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="star" aria-hidden="true">✦</span> 광주소프트웨어마이스터고 학생 전용</span>
+        <h1 class="hero-title">GSM 학생이라면 누구나 무료로 서브도메인을 등록하세요</h1>
+        <p class="hero-sub"><span class="dom">이름.gsmhs.xyz</span> 주소를 만들고, GitHub Pages나 Vercel에 올린 내 프로젝트를 CNAME으로 연결하세요. DataGSM 학교 계정으로 로그인하면 바로 시작할 수 있어요.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" th:if="${user != null}" href="/projects/new">서브도메인 등록하기 &rarr;</a>
+          <a class="btn btn-primary btn-lg" th:if="${user == null}" href="/login">DataGSM으로 로그인 &rarr;</a>
+          <a class="btn btn-ghost btn-lg" href="#directory">프로젝트 둘러보기</a>
+        </div>
+      </div>
 
-  <div class="container">
-    <section class="me-card" th:if="${user != null}">
+      <aside class="side-card" th:if="${user != null}">
+        <div class="side-card-top">
+          <span class="avatar avatar-lg" th:text="${#strings.substring(user.displayName,0,1)}">홍</span>
+          <div>
+            <div class="side-name" th:text="${user.displayName}">홍길동</div>
+            <div class="side-status">로그인됨 · DataGSM</div>
+          </div>
+        </div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="info-label">이름</div><div class="info-value" th:text="${user.displayName}">홍길동</div></div>
+          <div class="info-cell"><div class="info-label">학번</div><div class="info-value mono" th:text="${user.studentNumber}">2312</div></div>
+          <div class="info-cell"><div class="info-label">학과</div><div class="info-value" th:text="${user.majorLabel}">소프트웨어</div></div>
+        </div>
+        <a class="btn btn-primary btn-block" href="/projects/new">+ 서브도메인 등록하기</a>
+      </aside>
+
+      <aside class="side-card" th:if="${user == null}">
+        <div class="side-card-top">
+          <span class="avatar avatar-lg" aria-hidden="true">?</span>
+          <div>
+            <div class="side-name">아직 로그인 전이에요</div>
+            <div class="side-status">DataGSM 계정 필요</div>
+          </div>
+        </div>
+        <p class="side-lead">학교 DataGSM 계정으로 로그인하면 본인 확인 후 바로 서브도메인을 등록할 수 있어요. 별도 가입은 필요 없습니다.</p>
+        <a class="btn btn-primary btn-block" href="/login">DataGSM으로 로그인</a>
+      </aside>
+    </section>
+  </div></div>
+
+  <div class="container" id="directory">
+    <div class="dir-head">
       <div>
-        <p class="me-name" th:text="${user.displayName}">김수한</p>
-        <p class="me-meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.majorLabel}">학번 2401 · 소프트웨어개발과</p>
+        <h2 class="dir-title">프로젝트 디렉터리</h2>
+        <p class="dir-sub">GSM 학생들이 등록한 프로젝트를 둘러보세요.</p>
       </div>
-      <a class="btn btn-primary" href="/projects/new">서브도메인 등록하기</a>
-    </section>
+      <label class="search">
+        <span class="search-ic" aria-hidden="true">⌕</span>
+        <input type="search" id="projectSearch" placeholder="프로젝트 · 도메인 · 이름 검색" aria-label="프로젝트 검색" autocomplete="off">
+      </label>
+    </div>
 
-    <section>
-      <div class="section-head">
-        <h2 class="section-title">등록된 프로젝트</h2>
-        <span class="count-chip" th:text="${#lists.size(projects)}">3</span>
-      </div>
-      <div class="project-grid">
-        <article class="project-card" th:each="project : ${projects}">
-          <div class="card-top">
-            <h3 class="card-title" th:text="${project.displayTitle}">수한의 포트폴리오</h3>
-            <span class="badge badge-private" th:if="${!project.isPublic()}">비공개</span>
+    <div class="filters" role="tablist" aria-label="필터">
+      <button type="button" class="chip active" data-filter="all">전체</button>
+      <button type="button" class="chip" data-filter="public">공개</button>
+      <button type="button" class="chip" data-filter="private">비공개</button>
+      <button type="button" class="chip" data-filter="mine" th:if="${user != null}">내 프로젝트</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+      <article class="project-card" th:each="project : ${projects}"
+               th:attr="data-public=${project.isPublic()}, data-owned=${user != null and project.isOwnedBy(user.email)}, data-search=${project.displayTitle} + ' ' + ${project.subdomain} + ' ' + ${project.ownerName}">
+        <div class="card-top">
+          <h3 class="card-title" th:text="${project.displayTitle}">포트폴리오 2026</h3>
+          <span class="badge badge-public" th:if="${project.isPublic()}">공개</span>
+          <span class="badge badge-private" th:if="${!project.isPublic()}">비공개</span>
+        </div>
+        <a class="card-domain" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener">
+          <span th:text="${project.subdomain} + '.gsmhs.xyz'">gildong.gsmhs.xyz</span><span class="ext" aria-hidden="true">↗</span>
+        </a>
+        <p class="card-desc" th:if="${not #strings.isEmpty(project.description)}" th:text="${project.description}">나를 소개하는 개인 포트폴리오와 기술 블로그입니다.</p>
+        <div class="card-foot">
+          <div class="owner">
+            <span class="avatar owner-avatar" th:text="${#strings.substring(project.ownerName,0,1)}">홍</span>
+            <span th:text="${project.ownerName}">홍길동</span>
           </div>
-          <a class="card-domain" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" th:text="${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener">suhan.gsmhs.xyz</a>
-          <p class="card-desc" th:if="${not #strings.isEmpty(project.description)}" th:text="${project.description}">웹 포트폴리오와 개발 블로그. Next.js로 만들고 Vercel로 배포했어요.</p>
-          <div class="card-foot">
-            <span class="card-owner" th:text="${project.ownerName}">김수한</span>
-            <a class="card-gh" th:if="${not #strings.isEmpty(project.githubUrl)}" th:href="${project.githubUrl}" target="_blank" rel="noopener">GitHub &nearr;</a>
-            <div class="card-btns">
-              <a class="btn btn-ghost btn-xs" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener">열기</a>
-              <th:block th:if="${user != null and project.isOwnedBy(user.email)}">
-                <a class="btn btn-ghost btn-xs" th:href="@{'/projects/' + ${project.id} + '/edit'}">수정</a>
-                <form method="post" th:action="@{'/projects/' + ${project.id} + '/delete'}" onsubmit="return confirm('정말 삭제할까요? 연결된 DNS 레코드도 함께 삭제됩니다.')">
-                  <button class="btn btn-danger btn-xs" type="submit">삭제</button>
-                </form>
-              </th:block>
-            </div>
+          <div class="card-actions">
+            <a class="icon-btn" th:if="${not #strings.isEmpty(project.githubUrl)}" th:href="${project.githubUrl}" target="_blank" rel="noopener" title="GitHub">&lt;/&gt;</a>
+            <a class="icon-btn" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener" title="열기">열기</a>
+            <th:block th:if="${user != null and project.isOwnedBy(user.email)}">
+              <a class="icon-btn" th:href="@{'/projects/' + ${project.id} + '/edit'}" title="수정">수정</a>
+              <form method="post" th:action="@{'/projects/' + ${project.id} + '/delete'}" onsubmit="return confirm('정말 삭제할까요? 연결된 DNS 레코드도 함께 삭제됩니다.')">
+                <button class="icon-btn danger" type="submit" title="삭제">삭제</button>
+              </form>
+            </th:block>
           </div>
-        </article>
-        <article class="project-card" th:remove="all">
-          <div class="card-top"><h3 class="card-title">GSM 급식 위젯</h3></div>
-          <a class="card-domain" href="#" onclick="return false">meal.gsmhs.xyz</a>
-          <p class="card-desc">오늘의 급식과 시간표를 한눈에 보여주는 위젯 서비스입니다.</p>
-          <div class="card-foot">
-            <span class="card-owner">박지호</span>
-            <a class="card-gh" href="#" onclick="return false">GitHub &nearr;</a>
-            <div class="card-btns"><a class="btn btn-ghost btn-xs" href="#" onclick="return false">열기</a></div>
-          </div>
-        </article>
-        <article class="project-card" th:remove="all">
-          <div class="card-top"><h3 class="card-title">알고리즘 스터디 노트</h3><span class="badge badge-private">비공개</span></div>
-          <a class="card-domain" href="#" onclick="return false">algo-note.gsmhs.xyz</a>
-          <p class="card-desc">스터디에서 푼 문제 풀이를 아카이빙합니다.</p>
-          <div class="card-foot">
-            <span class="card-owner">이서연</span>
-            <div class="card-btns"><a class="btn btn-ghost btn-xs" href="#" onclick="return false">열기</a></div>
-          </div>
-        </article>
-      </div>
-      <div class="empty" th:if="${#lists.isEmpty(projects)}">
-        <span class="empty-mono">// NO PROJECTS YET</span>
-        <b>아직 등록된 프로젝트가 없어요</b>
-        <p>첫 번째 서브도메인의 주인이 되어 보세요.</p>
-      </div>
-    </section>
+        </div>
+      </article>
+
+      <article class="project-card" th:remove="all" data-public="true">
+        <div class="card-top"><h3 class="card-title">포트폴리오 2026</h3><span class="badge badge-public">공개</span></div>
+        <a class="card-domain" href="#" onclick="return false"><span>gildong.gsmhs.xyz</span><span class="ext">↗</span></a>
+        <p class="card-desc">나를 소개하는 개인 포트폴리오와 기술 블로그입니다.</p>
+        <div class="card-foot"><div class="owner"><span class="avatar owner-avatar">홍</span><span>홍길동</span></div>
+          <div class="card-actions"><a class="icon-btn" href="#" onclick="return false">&lt;/&gt;</a><a class="icon-btn" href="#" onclick="return false">열기</a></div></div>
+      </article>
+      <article class="project-card" th:remove="all" data-public="true">
+        <div class="card-top"><h3 class="card-title">GSM 급식 알리미</h3><span class="badge badge-public">공개</span></div>
+        <a class="card-domain" href="#" onclick="return false"><span>meal.gsmhs.xyz</span><span class="ext">↗</span></a>
+        <p class="card-desc">오늘의 급식과 학사일정을 한눈에 보여주는 웹앱.</p>
+        <div class="card-foot"><div class="owner"><span class="avatar owner-avatar">김</span><span>김하늘</span></div>
+          <div class="card-actions"><a class="icon-btn" href="#" onclick="return false">&lt;/&gt;</a><a class="icon-btn" href="#" onclick="return false">열기</a></div></div>
+      </article>
+      <article class="project-card" th:remove="all" data-public="true">
+        <div class="card-top"><h3 class="card-title">IoT 스마트 화분</h3><span class="badge badge-public">공개</span></div>
+        <a class="card-domain" href="#" onclick="return false"><span>planty.gsmhs.xyz</span><span class="ext">↗</span></a>
+        <p class="card-desc">아두이노 기반 스마트 화분의 센서 데이터 대시보드.</p>
+        <div class="card-foot"><div class="owner"><span class="avatar owner-avatar">이</span><span>이도윤</span></div>
+          <div class="card-actions"><a class="icon-btn" href="#" onclick="return false">&lt;/&gt;</a><a class="icon-btn" href="#" onclick="return false">열기</a></div></div>
+      </article>
+    </div>
+
+    <div class="empty" th:if="${#lists.isEmpty(projects)}">
+      <span class="empty-mono">// NO PROJECTS YET</span>
+      <b>아직 등록된 프로젝트가 없어요</b>
+      <p>첫 번째 서브도메인의 주인이 되어 보세요.</p>
+    </div>
+    <div class="empty" id="noResults" style="display:none">
+      <span class="empty-mono">// NO MATCHES</span>
+      <b>검색 결과가 없어요</b>
+      <p>다른 키워드나 필터로 다시 찾아보세요.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer"><div class="container footer-inner">
     <p class="copyright">&copy; 2026 gsmhs.xyz. All rights reserved.</p>
     <nav class="footer-nav"><a href="/">홈</a><a href="/tos">이용약관</a><a href="/privacy">개인정보 보호정책</a></nav>
   </div></footer>
-
+<script>
+(function(){
+  var grid=document.getElementById('projectGrid');
+  var search=document.getElementById('projectSearch');
+  var chips=document.querySelectorAll('.chip');
+  var noRes=document.getElementById('noResults');
+  if(!grid)return;
+  var cards=[].slice.call(grid.querySelectorAll('.project-card'));
+  var mode='all';
+  function apply(){
+    var q=(search&&search.value||'').trim().toLowerCase();
+    var shown=0;
+    cards.forEach(function(c){
+      var pub=c.getAttribute('data-public')==='true';
+      var mine=c.getAttribute('data-owned')==='true';
+      var okMode=mode==='all'||(mode==='public'&&pub)||(mode==='private'&&!pub)||(mode==='mine'&&mine);
+      var hay=(c.getAttribute('data-search')||c.textContent||'').toLowerCase();
+      var okQ=!q||hay.indexOf(q)>-1;
+      var show=okMode&&okQ;
+      c.style.display=show?'':'none';
+      if(show)shown++;
+    });
+    if(noRes)noRes.style.display=(cards.length&&shown===0)?'':'none';
+  }
+  chips.forEach(function(ch){ch.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('active');});
+    ch.classList.add('active');mode=ch.getAttribute('data-filter');apply();
+  });});
+  if(search)search.addEventListener('input',apply);
+})();
+</script>
 </body>
 </html>

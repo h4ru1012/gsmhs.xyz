@@ -90,8 +90,8 @@ a:hover{color:var(--text-2)}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.35fr .95fr;gap:44px;align-items:center;padding:70px 0 30px}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-2);border:1px solid var(--border-2);border-radius:999px;padding:5px 14px;background:var(--surface)}
 .eyebrow .star{color:var(--text);font-size:12px}
-.hero-title{font-size:clamp(30px,4.6vw,46px);font-weight:800;line-height:1.24;letter-spacing:-.035em;margin:22px 0 18px;text-wrap:balance}
-.hero-sub{max-width:520px;color:var(--text-2);font-size:15.5px;margin-bottom:28px;text-wrap:pretty}
+.hero-title{font-size:clamp(30px,4.6vw,46px);font-weight:800;line-height:1.24;letter-spacing:-.035em;margin:22px 0 18px;text-wrap:balance;word-break:keep-all}
+.hero-sub{max-width:520px;color:var(--text-2);font-size:15.5px;margin-bottom:28px;text-wrap:pretty;word-break:keep-all}
 .hero-sub .dom{font-family:var(--mono);color:var(--text);font-size:.95em}
 .hero-actions{display:flex;gap:11px;flex-wrap:wrap}
 /* side card */
@@ -261,7 +261,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
     <section class="hero-grid">
       <div class="hero-copy">
         <h1 class="hero-title">GSM 학생이라면 누구나 무료로 서브도메인을 등록하세요</h1>
-        <p class="hero-sub"><span class="dom">이름.gsmhs.xyz</span> 주소를 만들고, GitHub Pages나 Vercel에 올린 내 프로젝트를 CNAME으로 연결하세요. DataGSM 학교 계정으로 로그인하면 바로 시작할 수 있어요.</p>
+        <p class="hero-sub"><span class="dom">이름.gsmhs.xyz</span> 주소를 만들고, AWS, Vercel, GitHub Pages에 올린 내 프로젝트를 CNAME으로 연결하세요. DataGSM 학교 계정으로 로그인하면 바로 시작할 수 있어요.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" th:if="${user != null}" href="/projects/new">서브도메인 등록하기 &rarr;</a>
           <a class="btn btn-primary btn-lg" th:if="${user == null}" href="/login">DataGSM으로 로그인 &rarr;</a>

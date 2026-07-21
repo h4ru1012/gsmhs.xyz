@@ -1,303 +1,302 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gsmhs.xyz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0e1116;
-            --surface: #171c24;
-            --border: #2a3240;
-            --text: #e8ecf1;
-            --muted: #8b95a5;
-            --accent: #4f8cff;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: "Noto Sans KR", "Noto Sans CJK KR", -apple-system, "Segoe UI", sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-        }
-        .page {
-            max-width: 960px;
-            margin: 0 auto;
-            flex: 1;
-            width: 100%;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .domain {
-            font-family: inherit;
-            font-size: 15px;
-            color: var(--accent);
-            letter-spacing: 0.04em;
-        }
-        .account {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            color: var(--muted);
-        }
-        .account a { color: var(--muted); }
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 28px;
-        }
-        h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-        h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
-        .sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
-        .error {
-            background: rgba(255, 92, 92, 0.1);
-            border: 1px solid rgba(255, 92, 92, 0.35);
-            color: #ff8f8f;
-            font-size: 13px;
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-bottom: 20px;
-        }
-        .btn {
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-            background: var(--accent);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 13px 22px;
-            border-radius: 10px;
-            transition: opacity 0.15s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover { opacity: 0.88; }
-        .btn.secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--muted);
-        }
-        .btn.block { display: block; width: 100%; }
-        .profile {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 18px 20px;
-            margin-bottom: 24px;
-        }
-        .profile .who { font-size: 17px; font-weight: 700; }
-        .profile .meta {
-            font-family: inherit;
-            font-size: 12.5px;
-            color: var(--muted);
-        }
-        .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-        }
-        .project {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-        }
-        .project .name-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-        .project .name {
-            font-size: 15px;
-            font-weight: 700;
-            word-break: break-all;
-        }
-        .badge {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 2px 8px;
-            white-space: nowrap;
-        }
-        .project .subdomain {
-            font-family: inherit;
-            font-size: 13px;
-            margin-bottom: 10px;
-            word-break: break-all;
-        }
-        .project .subdomain a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        .project .subdomain a:hover { text-decoration: underline; }
-        .project .desc {
-            font-size: 13.5px;
-            color: var(--text);
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-        .project .meta {
-            font-size: 12px;
-            color: var(--muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .project .meta a { color: var(--muted); }
-        .project .card-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-        .mini-btn {
-            font-size: 12px;
-            color: var(--muted);
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 5px 12px;
-            cursor: pointer;
-            text-decoration: none;
-            font-family: inherit;
-            transition: border-color 0.15s, color 0.15s;
-        }
-        .mini-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .mini-btn.primary { border-color: var(--accent); color: var(--accent); }
-        .mini-btn.primary:hover { background: rgba(79, 140, 255, 0.1); }
-        .mini-btn.danger:hover { border-color: #ff5c5c; color: #ff8f8f; }
-        .empty {
-            color: var(--muted);
-            font-size: 14px;
-            padding: 12px 0;
-        }
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 24px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: 40px;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gsmhs.xyz — GSM 서브도메인 허브</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0e14;--surface:#121826;--surface-2:#1a2234;--inset:#0d121c;
+  --border:#1f2939;--border-2:#2b3a55;
+  --text:#e8edf6;--text-2:#9aa7bd;--text-3:#7d8aa0;
+  --accent:#6ea6ff;--accent-solid:#2563eb;--accent-solid-2:#3b76f0;--accent-dim:rgba(110,166,255,.1);
+  --green:#3ecf8e;--red:#f47171;--red-dim:rgba(244,113,113,.09);
+  --sans:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'Noto Sans Mono','Noto Sans KR',monospace;
+  --r:14px;--r-s:9px;--ring:0 0 0 3px rgba(110,166,255,.22);
+}
+html{color-scheme:dark}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+main{flex:1;width:100%}
+a{color:var(--accent);text-decoration:none;transition:color .15s}
+a:hover{color:#9dc1ff}
+::selection{background:rgba(80,140,255,.4)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono)}
+.container{width:100%;max-width:1064px;margin:0 auto;padding:0 24px}
+.container-narrow{max-width:648px}
+.container-wide{max-width:1320px}
+.container-prose{max-width:768px}
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.brand:hover{color:var(--text)}
+.brand-mark{width:11px;height:11px;border-radius:3px;background:linear-gradient(135deg,#8cb8ff,#2563eb);box-shadow:0 0 12px rgba(80,140,255,.55)}
+.brand-tld{color:var(--accent)}
+.brand-side{display:inline-flex;align-items:center;gap:10px}
+.mode-chip{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--accent);border:1px solid rgba(110,166,255,.35);background:var(--accent-dim);padding:2px 8px;border-radius:6px}
+.header-nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.user-chip{display:flex;align-items:center;gap:14px;font-size:13.5px}
+.user-name{font-weight:700;display:inline-flex;align-items:center;gap:7px}
+.user-name::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
+.nav-link{color:var(--text-2);font-size:13.5px}
+.nav-link:hover{color:var(--text)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid transparent;border-radius:var(--r-s);font-family:var(--sans);font-weight:700;font-size:14px;line-height:1.5;padding:9px 18px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--accent-solid);color:#fff}
+.btn-primary:hover{background:var(--accent-solid-2);color:#fff}
+.btn-lg{font-size:15.5px;padding:13px 28px;border-radius:11px}
+.btn-sm{font-size:13px;padding:6px 14px}
+.btn-xs{font-size:12px;padding:4px 11px;border-radius:7px}
+.btn-ghost{background:transparent;border-color:var(--border-2);color:var(--text-2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text);background:var(--accent-dim)}
+.btn-danger{background:transparent;border-color:rgba(244,113,113,.35);color:var(--red)}
+.btn-danger:hover{background:var(--red-dim);color:var(--red)}
+/* alert / badge */
+.alert{display:flex;gap:11px;align-items:flex-start;border:1px solid rgba(244,113,113,.35);background:var(--red-dim);border-radius:var(--r-s);padding:13px 16px;margin-top:24px;font-size:14px;color:#ffc9c9}
+.alert-icon{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;background:rgba(244,113,113,.18);color:var(--red);font-weight:700;font-size:12px;display:grid;place-items:center;font-family:var(--mono)}
+.badge{flex:none;display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2.5px 9px;border-radius:999px;letter-spacing:.02em;line-height:1.6}
+.badge-private{color:var(--text-2);background:rgba(154,167,189,.12);border:1px solid rgba(154,167,189,.3)}
+.badge-public{color:var(--green);background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.3)}
+/* hero */
+.hero{position:relative;padding:82px 24px 58px;text-align:center}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(140,170,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(140,170,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);pointer-events:none}
+.hero>*{position:relative}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-2);border:1px solid var(--border-2);border-radius:999px;padding:5px 14px;background:rgba(18,24,38,.7)}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
+.hero-title{font-size:clamp(30px,5.4vw,49px);font-weight:900;line-height:1.24;letter-spacing:-.035em;margin:22px 0 16px}
+.hero-title .grad{font-family:var(--mono);font-weight:700;font-size:.94em;letter-spacing:-.045em;background:linear-gradient(100deg,#d3e2ff 10%,#6ea6ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:540px;margin:0 auto 30px;color:var(--text-2);font-size:16px;text-wrap:pretty}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin-bottom:46px}
+.dns-demo{display:inline-flex;align-items:center;gap:14px;padding:13px 20px;background:var(--inset);border:1px solid var(--border);border-radius:11px;font-family:var(--mono);font-size:13.5px;box-shadow:0 16px 44px rgba(0,0,0,.42);flex-wrap:wrap;justify-content:center}
+.dns-type{color:var(--green);font-weight:700;font-size:10.5px;letter-spacing:.1em;border:1px solid rgba(62,207,142,.3);padding:2px 8px;border-radius:5px;background:rgba(62,207,142,.08)}
+.dns-name{color:var(--text)}.dns-name b{color:var(--text-3);font-weight:400}
+.dns-arrow{color:var(--text-3)}
+.dns-target{color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;list-style:none;max-width:860px;margin:50px auto 0;text-align:left}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.step-num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700;letter-spacing:.12em}
+.step b{display:block;font-size:14.5px;margin:8px 0 3px}
+.step p{font-size:13px;color:var(--text-2);line-height:1.55}
+/* logged-in card */
+.me-card{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px 28px;margin-top:36px}
+.me-name{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.35}
+.me-meta{color:var(--text-2);font-size:13.5px;margin-top:2px}
+/* projects */
+.section-head{display:flex;align-items:baseline;gap:10px;margin:54px 0 18px}
+.section-title{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.count-chip{font-family:var(--mono);font-size:12px;color:var(--text-2);border:1px solid var(--border-2);padding:1px 9px;border-radius:999px;background:var(--surface)}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.project-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .15s}
+.project-card:hover{border-color:var(--border-2)}
+.card-top{display:flex;align-items:center;gap:9px;justify-content:space-between}
+.card-title{font-size:16px;font-weight:700;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-domain{font-family:var(--mono);font-size:13px;display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:100%}
+.card-domain::after{content:'\2197';font-size:11px;color:var(--text-3)}
+.card-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;flex-wrap:wrap}
+.card-owner{color:var(--text-3);font-weight:500}
+.card-gh{font-family:var(--mono);font-size:11.5px;color:var(--text-2)}
+.card-btns{margin-left:auto;display:flex;gap:6px;align-items:center}
+.card-btns form{display:inline-flex;margin:0}
+.empty{border:1.5px dashed var(--border-2);border-radius:var(--r);padding:56px 24px;text-align:center;margin-top:16px}
+.empty-mono{font-family:var(--mono);font-size:11.5px;color:var(--text-3);letter-spacing:.14em}
+.empty b{display:block;font-size:16px;margin:10px 0 4px}
+.empty p{font-size:13.5px;color:var(--text-2)}
+/* form */
+.back-link{display:inline-block;margin:36px 0 14px;font-size:13.5px;color:var(--text-2)}
+.page-head{margin:44px 0 26px}
+.page-title{font-size:27px;font-weight:900;letter-spacing:-.02em}
+.page-sub{color:var(--text-2);font-size:14.5px;margin-top:6px;text-wrap:pretty}
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:30px;margin:26px 0 64px;display:flex;flex-direction:column;gap:22px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-label{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+.req{color:var(--accent)}
+.opt{font-size:10.5px;color:var(--text-3);font-weight:500;border:1px solid var(--border);padding:0 7px;border-radius:999px}
+.control{width:100%;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);color:var(--text);font-family:var(--sans);font-size:14.5px;padding:10px 13px;transition:border-color .15s,box-shadow .15s}
+.control::placeholder{color:var(--text-3)}
+.control:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
+textarea.control{resize:vertical;min-height:88px;line-height:1.6}
+.subdomain-group{display:flex;align-items:stretch}
+.subdomain-group .control{border-radius:var(--r-s) 0 0 var(--r-s);font-family:var(--mono);font-size:14px}
+.suffix{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border:1px solid var(--border-2);border-left:0;border-radius:0 var(--r-s) var(--r-s) 0;color:var(--text-2);font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+.hint{font-size:12.5px;color:var(--text-3);line-height:1.6}
+.hint code{font-family:var(--mono);color:var(--text-2);background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:11.5px}
+.preview-line{font-family:var(--mono);font-size:12.5px;color:var(--text-3)}
+.preview-line b{color:var(--accent);font-weight:500}
+.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radio-card{display:flex;gap:11px;align-items:flex-start;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);padding:13px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.radio-card input{margin-top:4px;accent-color:var(--accent-solid);width:15px;height:15px;flex:none}
+.radio-card b{display:block;font-size:14px}
+.radio-card small{display:block;font-size:12px;color:var(--text-3);margin-top:1px;line-height:1.5}
+.radio-card:has(input:checked){border-color:var(--accent);background:var(--accent-dim)}
+.form-actions{display:flex;gap:10px;border-top:1px solid var(--border);padding-top:22px}
+/* admin */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:44px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 18px}
+.stat-label{font-size:12px;color:var(--text-3);font-weight:600}
+.stat-value{font-family:var(--mono);font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
+.stat-on{color:var(--green)}.stat-off{color:var(--red)}
+.admin-section{margin-bottom:48px}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow-x:auto}
+.table-wrap::-webkit-scrollbar{height:8px}
+.table-wrap::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+.data-table th{font-size:11.5px;color:var(--text-3);font-weight:700;letter-spacing:.04em;text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);background:rgba(13,18,28,.6)}
+.data-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.data-table tbody tr:last-child td{border-bottom:0}
+.data-table tbody tr:hover{background:rgba(140,170,255,.03)}
+.data-table form{display:inline-flex;margin:0}
+.tbl-users{min-width:940px}
+.tbl-projects{min-width:1280px}
+.cell-strong{font-weight:700}
+.cell-mono{font-family:var(--mono);font-size:12.5px}
+.cell-dim{color:var(--text-3)}
+.cell-desc{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.owner-email{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:1px}
+/* prose */
+.doc-head{margin:52px 0 34px;padding-bottom:26px;border-bottom:1px solid var(--border)}
+.doc-eyebrow{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.16em;font-weight:700}
+.doc-title{font-size:32px;font-weight:900;letter-spacing:-.02em;margin-top:10px}
+.doc-meta{font-size:12.5px;color:var(--text-3);margin-top:10px;font-family:var(--mono)}
+.prose{padding-bottom:28px}
+.prose h2{font-size:17.5px;font-weight:800;margin:34px 0 12px;letter-spacing:-.01em}
+.prose p{font-size:14.5px;color:var(--text-2);margin-bottom:10px;line-height:1.8;text-wrap:pretty}
+.prose ol,.prose ul{margin:0 0 12px;padding-left:22px;color:var(--text-2);font-size:14.5px;line-height:1.8}
+.prose li{margin-bottom:5px}
+.prose strong{color:var(--text)}
+.prose .table-wrap{margin:16px 0 20px}
+.prose .data-table{white-space:normal;min-width:620px}
+.prose .data-table td{font-size:13px;color:var(--text-2);line-height:1.6}
+/* footer */
+.site-footer{border-top:1px solid var(--border);margin-top:72px;background:rgba(13,17,26,.5)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:26px 24px;flex-wrap:wrap}
+.copyright{font-size:12px;color:var(--text-3);font-family:var(--mono)}
+.footer-nav{display:flex;gap:22px;font-size:13px}
+.footer-nav a{color:var(--text-2)}
+.footer-nav a:hover{color:var(--text)}
+@media (max-width:720px){
+  .hero{padding:56px 16px 44px}
+  .steps{grid-template-columns:1fr;margin-top:38px}
+  .me-card{padding:22px}
+  .form-card{padding:22px 18px}
+  .radio-row{grid-template-columns:1fr}
+  .footer-inner{justify-content:center;text-align:center}
+  .section-head{margin-top:42px}
+}
+</style>
 </head>
 <body>
-<div class="page">
-    <header>
-        <span class="domain">gsmhs.xyz</span>
-        <div class="account" th:if="${user != null}">
-            <span th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
-            <a href="/admin" th:if="${user.admin}">관리자</a>
-            <a href="/logout">로그아웃</a>
-        </div>
-        <div class="account" th:if="${user == null}">
-            <a href="/login">DataGSM으로 로그인</a>
-        </div>
-    </header>
-
-    <div th:if="${errorMessage}" class="error" th:text="${errorMessage}"></div>
-
-    <!-- 로그인 전 -->
-    <main class="card" th:if="${user == null}">
-        <h1>내 서브도메인 만들기</h1>
-        <p class="sub">GSM 학생이라면 누구나 무료로 서브도메인을 등록할 수 있어요.<br>DataGSM 계정으로 로그인해 주세요.</p>
-        <a class="btn" href="/login">DataGSM으로 로그인</a>
-    </main>
-
-    <!-- 로그인 후 -->
-    <main class="card" th:if="${user != null}">
-        <h1>환영합니다</h1>
-        <p class="sub">로그인 정보가 확인되었습니다.</p>
-        <div class="profile">
-            <span class="who" th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
-            <span class="meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.majorLabel}">학번 1101 · 소프트웨어개발과</span>
-        </div>
-        <div class="actions">
-            <a class="btn" href="/projects/new">서브도메인 등록하기</a>
-        </div>
-    </main>
-
-    <section class="card">
-        <h2>등록된 프로젝트</h2>
-        <div class="projects" th:if="${not #lists.isEmpty(projects)}">
-            <div class="project" th:each="project : ${projects}">
-                <div class="name-row">
-                    <span class="name" th:text="${project.displayTitle}">프로젝트 이름</span>
-                    <span class="badge" th:if="${!project.isPublic()}">비공개</span>
-                </div>
-                <div class="subdomain">
-                    <a th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener"
-                       th:text="${project.subdomain} + '.gsmhs.xyz'">example.gsmhs.xyz</a>
-                </div>
-                <div class="desc" th:if="${not #strings.isEmpty(project.description)}"
-                     th:text="${project.description}">프로젝트 소개</div>
-                <div class="meta">
-                    <span th:text="${project.ownerName}">1학년 1반 1번 홍길동</span>
-                    <a th:if="${project.githubUrl}" th:href="${project.githubUrl}" target="_blank" rel="noopener">GitHub →</a>
-                </div>
-                <div class="card-actions">
-                    <a class="mini-btn primary" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'"
-                       target="_blank" rel="noopener">열기</a>
-                    <th:block th:if="${user != null and project.isOwnedBy(user.email)}">
-                        <a class="mini-btn" th:href="'/projects/' + ${project.id} + '/edit'">수정</a>
-                        <form th:action="'/projects/' + ${project.id} + '/delete'" method="post"
-                              onsubmit="return confirm('정말 삭제할까요? DNS 레코드도 함께 삭제됩니다.');">
-                            <button type="submit" class="mini-btn danger">삭제</button>
-                        </form>
-                    </th:block>
-                </div>
-            </div>
-        </div>
-        <p class="empty" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요. 첫 번째로 등록해 보세요!</p>
-    </section>
-</div>
-
-<footer>
-    <div class="footer-links">
-        <a href="/">홈</a>
-        <a href="/tos">이용약관</a>
-        <a href="/privacy">개인정보 보호정책</a>
+<header class="site-header"><div class="container header-inner">
+    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>gsmhs<span class="brand-tld">.xyz</span></a></span>
+    <nav class="header-nav">
+      <div class="user-chip" th:if="${user != null}">
+        <span class="user-name" th:text="${user.displayName}">김수한</span>
+        <a class="nav-link" th:if="${user.admin}" href="/admin">관리자</a>
+        <a class="nav-link" href="/logout">로그아웃</a>
+      </div>
+      <a class="btn btn-primary btn-sm" th:if="${user == null}" href="/login">DataGSM으로 로그인</a>
+    </nav>
+  </div></header>
+<main>
+  <div class="container">
+    <div class="alert" th:if="${errorMessage}" role="alert">
+      <span class="alert-icon" aria-hidden="true">!</span>
+      <p th:text="${errorMessage}">요청을 처리하는 중 문제가 발생했습니다. 다시 시도해 주세요.</p>
     </div>
-    <p>&copy; 2026 gsmhs.xyz. All rights reserved.</p>
-</footer>
+  </div>
+
+  <section class="hero" th:if="${user == null}">
+    <p class="hero-eyebrow">GSM 학생 전용 서브도메인 허브</p>
+    <h1 class="hero-title">내 프로젝트를 위한<br><span class="grad">이름.gsmhs.xyz</span></h1>
+    <p class="hero-sub">GitHub Pages·Vercel 배포에 CNAME 한 줄로 연결되는 무료 서브도메인. 광주소프트웨어마이스터고 학생이라면 누구나 만들 수 있어요.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/login">DataGSM으로 로그인</a></div>
+    <div class="dns-demo" aria-hidden="true">
+      <span class="dns-type">CNAME</span>
+      <span class="dns-name">suhan<b>.gsmhs.xyz</b></span>
+      <span class="dns-arrow">&rarr;</span>
+      <span class="dns-target">suhan.github.io</span>
+    </div>
+    <ol class="steps">
+      <li class="step"><span class="step-num">01</span><b>DataGSM으로 로그인</b><p>학교 계정으로 본인 확인 후 바로 시작해요.</p></li>
+      <li class="step"><span class="step-num">02</span><b>서브도메인 등록</b><p>원하는 이름과 CNAME 대상을 입력하면 DNS 레코드가 만들어져요.</p></li>
+      <li class="step"><span class="step-num">03</span><b>배포에 연결</b><p>GitHub Pages·Vercel에서 커스텀 도메인으로 추가하면 끝.</p></li>
+    </ol>
+  </section>
+
+  <div class="container">
+    <section class="me-card" th:if="${user != null}">
+      <div>
+        <p class="me-name" th:text="${user.displayName}">김수한</p>
+        <p class="me-meta" th:text="'학번 ' + ${user.studentNumber} + ' · ' + ${user.majorLabel}">학번 2401 · 소프트웨어개발과</p>
+      </div>
+      <a class="btn btn-primary" href="/projects/new">서브도메인 등록하기</a>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2 class="section-title">등록된 프로젝트</h2>
+        <span class="count-chip" th:text="${#lists.size(projects)}">3</span>
+      </div>
+      <div class="project-grid">
+        <article class="project-card" th:each="project : ${projects}">
+          <div class="card-top">
+            <h3 class="card-title" th:text="${project.displayTitle}">수한의 포트폴리오</h3>
+            <span class="badge badge-private" th:if="${!project.isPublic()}">비공개</span>
+          </div>
+          <a class="card-domain" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" th:text="${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener">suhan.gsmhs.xyz</a>
+          <p class="card-desc" th:if="${not #strings.isEmpty(project.description)}" th:text="${project.description}">웹 포트폴리오와 개발 블로그. Next.js로 만들고 Vercel로 배포했어요.</p>
+          <div class="card-foot">
+            <span class="card-owner" th:text="${project.ownerName}">김수한</span>
+            <a class="card-gh" th:if="${not #strings.isEmpty(project.githubUrl)}" th:href="${project.githubUrl}" target="_blank" rel="noopener">GitHub &nearr;</a>
+            <div class="card-btns">
+              <a class="btn btn-ghost btn-xs" th:href="'https://' + ${project.subdomain} + '.gsmhs.xyz'" target="_blank" rel="noopener">열기</a>
+              <th:block th:if="${user != null and project.isOwnedBy(user.email)}">
+                <a class="btn btn-ghost btn-xs" th:href="@{'/projects/' + ${project.id} + '/edit'}">수정</a>
+                <form method="post" th:action="@{'/projects/' + ${project.id} + '/delete'}" onsubmit="return confirm('정말 삭제할까요? 연결된 DNS 레코드도 함께 삭제됩니다.')">
+                  <button class="btn btn-danger btn-xs" type="submit">삭제</button>
+                </form>
+              </th:block>
+            </div>
+          </div>
+        </article>
+        <article class="project-card" th:remove="all">
+          <div class="card-top"><h3 class="card-title">GSM 급식 위젯</h3></div>
+          <a class="card-domain" href="#" onclick="return false">meal.gsmhs.xyz</a>
+          <p class="card-desc">오늘의 급식과 시간표를 한눈에 보여주는 위젯 서비스입니다.</p>
+          <div class="card-foot">
+            <span class="card-owner">박지호</span>
+            <a class="card-gh" href="#" onclick="return false">GitHub &nearr;</a>
+            <div class="card-btns"><a class="btn btn-ghost btn-xs" href="#" onclick="return false">열기</a></div>
+          </div>
+        </article>
+        <article class="project-card" th:remove="all">
+          <div class="card-top"><h3 class="card-title">알고리즘 스터디 노트</h3><span class="badge badge-private">비공개</span></div>
+          <a class="card-domain" href="#" onclick="return false">algo-note.gsmhs.xyz</a>
+          <p class="card-desc">스터디에서 푼 문제 풀이를 아카이빙합니다.</p>
+          <div class="card-foot">
+            <span class="card-owner">이서연</span>
+            <div class="card-btns"><a class="btn btn-ghost btn-xs" href="#" onclick="return false">열기</a></div>
+          </div>
+        </article>
+      </div>
+      <div class="empty" th:if="${#lists.isEmpty(projects)}">
+        <span class="empty-mono">// NO PROJECTS YET</span>
+        <b>아직 등록된 프로젝트가 없어요</b>
+        <p>첫 번째 서브도메인의 주인이 되어 보세요.</p>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="site-footer"><div class="container footer-inner">
+    <p class="copyright">&copy; 2026 gsmhs.xyz. All rights reserved.</p>
+    <nav class="footer-nav"><a href="/">홈</a><a href="/tos">이용약관</a><a href="/privacy">개인정보 보호정책</a></nav>
+  </div></footer>
+
 </body>
 </html>

@@ -65,6 +65,13 @@ class GsmhsApplicationTests {
     }
 
     @Test
+    void 연결_가이드_페이지가_렌더링된다() throws Exception {
+        mockMvc.perform(get("/guide"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("도메인 연결 가이드")));
+    }
+
+    @Test
     void 비로그인_등록_폼은_로그인으로_리다이렉트된다() throws Exception {
         mockMvc.perform(get("/projects/new"))
                 .andExpect(status().is3xxRedirection())

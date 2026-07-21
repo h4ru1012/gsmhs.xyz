@@ -57,4 +57,11 @@ public class HomeController {
         model.addAttribute("user", user);
         return "privacy";
     }
+
+    @GetMapping("/guide")
+    public String connectionGuide(HttpSession session, Model model) {
+        SessionUser user = (SessionUser) session.getAttribute(AuthController.SESSION_USER);
+        model.addAttribute("user", user);
+        return "guide";
+    }
 }

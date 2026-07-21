@@ -78,7 +78,7 @@ NAS의 JDK 25(temurin) 컨테이너에서 직접 빌드·실행하는 방식.
 ```bash
 git clone https://github.com/h4ru1012/gsmhs.xyz.git && cd gsmhs.xyz
 cp .env.example .env   # 실제 값 입력 (DATAGSM_CLIENT_ID/SECRET, CF_API_TOKEN/ZONE_ID, ADMIN_EMAILS)
-./gradlew build -x test
+./gradlew build   # 테스트 포함 (시크릿 없이도 통과하도록 작성됨)
 java -jar build/libs/gsmhs.xyz-0.0.1-SNAPSHOT.jar
 ```
 
@@ -86,7 +86,7 @@ java -jar build/libs/gsmhs.xyz-0.0.1-SNAPSHOT.jar
   **현재 작업 디렉터리 기준**으로 읽힌다. 다른 디렉터리에서 실행하면 `.env`가 무시되어
   로그인 URL에 `${DATAGSM_CLIENT_ID}`가 그대로 노출된다.
   다른 위치에서 실행해야 한다면 `export $(grep -v '^#' /path/to/.env | xargs)` 후 실행.
-- 업데이트 배포: `git pull && ./gradlew build -x test` 후 프로세스 재시작
+- 업데이트 배포: `git pull && ./gradlew build` 후 프로세스 재시작
   (`server.shutdown: graceful`이라 처리 중 요청은 마치고 종료됨).
 - DB(`gsmhs.xyz.db`)는 실행 디렉터리에 생성됨 — 백업 대상. `GSMHS_DB_PATH`로 경로 지정 가능.
 
@@ -103,7 +103,7 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
 ### 배포 전 체크리스트
 
-- [ ] `./gradlew build -x test` 통과
+- [ ] `./gradlew build` 통과 (단위 + 통합 테스트 포함)
 - [ ] `.env` 실제 값 채움 (secret은 git에 절대 커밋 금지)
 - [ ] 로컬 http 테스트 시에만 `SESSION_COOKIE_SECURE=false` — **운영에선 제거**(기본 true)
 - [ ] DataGSM 클라이언트에 운영 리다이렉트 URI(`https://gsmhs.xyz/oauth/callback`) 등록 확인

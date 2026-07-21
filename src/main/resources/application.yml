@@ -1,5 +1,15 @@
 server:
   port: 8080
+  # nginx 등 리버스 프록시 뒤에서 X-Forwarded-*(스킴/호스트/클라이언트 IP)를 신뢰
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        # HTTPS 전용. 로컬 http 테스트 시 SESSION_COOKIE_SECURE=false 로 내려서 사용
+        secure: ${SESSION_COOKIE_SECURE:true}
+        # 교차 사이트 POST(CSRF) 차단. OAuth 콜백은 top-level GET이라 Lax와 호환
+        same-site: lax
 
 spring:
   config:
@@ -9,7 +19,8 @@ spring:
   application:
     name: gsmhs.xyz
   thymeleaf:
-    cache: false # 개발 중에만 false, 배포 시 true 권장
+    # 운영 캐시 활성화. devtools가 개발 실행 시 자동으로 false로 내려준다.
+    cache: true
   datasource:
     url: jdbc:sqlite:${GSMHS_DB_PATH:gsmhs.xyz.db}
     driver-class-name: org.sqlite.JDBC

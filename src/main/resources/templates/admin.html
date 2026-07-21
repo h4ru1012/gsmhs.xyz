@@ -238,7 +238,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
 <body>
 <header class="site-header"><div class="container header-inner">
     <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">g</span>gsmhs<span class="brand-tld">.xyz</span></a><span class="mode-chip">ADMIN</span></span>
-    <nav class="header-nav"><button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button><a class="nav-link" href="/">홈</a><a class="nav-link" href="/logout">로그아웃</a></nav>
+    <nav class="header-nav"><button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환" title="테마 전환"><span class="theme-toggle-icon" aria-hidden="true"></span></button><a class="nav-link" href="/">홈</a><form method="post" action="/logout" style="display:inline"><button type="submit" class="nav-link" style="background:none;border:0;padding:0;font-family:inherit;cursor:pointer">로그아웃</button></form></nav>
   </div></header>
 <main>
   <div class="container container-wide">

@@ -242,7 +242,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
       <div class="user-chip" th:if="${user != null}">
         <span class="user-name" th:text="${user.displayName}">김수한</span>
         <a class="nav-link" th:if="${user.admin}" href="/admin">관리자</a>
-        <a class="nav-link" href="/logout">로그아웃</a>
+        <form method="post" action="/logout" style="display:inline"><button type="submit" class="nav-link" style="background:none;border:0;padding:0;font-family:inherit;cursor:pointer">로그아웃</button></form>
       </div>
       <a class="btn btn-primary btn-sm" th:if="${user == null}" href="/login">DataGSM으로 로그인</a>
     </nav>

@@ -24,7 +24,8 @@ public class ProjectController {
     private static final Pattern HOST_PATTERN =
             Pattern.compile("^([a-z0-9]([a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$");
     private static final Set<String> RESERVED_SUBDOMAINS = Set.of(
-            "www", "oauth", "api", "admin", "login", "logout", "app", "static", "mail");
+            "www", "oauth", "api", "admin", "login", "logout", "app", "static", "mail",
+            "ns", "ns1", "ns2", "mx", "smtp", "webmail", "ftp", "cdn", "assets", "cname", "root");
 
     private final ProjectRepository projectRepository;
     private final CloudflareDnsService dnsService;
@@ -87,7 +88,16 @@ public class ProjectController {
                 blankToEmpty(description), blankToNull(githubUrl),
                 user.getDisplayName(), user.getEmail(), visible);
         project.setCfRecordId(recordId);
-        projectRepository.save(project);
+        try {
+            projectRepository.save(project);
+        } catch (Exception e) {
+            // 저장 실패(예: 동시 요청으로 서브도메인 unique 위반) 시 방금 만든 DNS 레코드를
+            // 되돌려 Cloudflare에 고아 레코드가 남지 않도록 보상한다.
+            dnsService.deleteRecord(recordId);
+            prepareForm(model, form, "/projects", "서브도메인 등록", "등록하기");
+            model.addAttribute("errorMessage", "프로젝트 저장에 실패했어요. 서브도메인이 방금 사용됐을 수 있어요. 다시 시도해 주세요.");
+            return "register";
+        }
 
         return "redirect:/";
     }

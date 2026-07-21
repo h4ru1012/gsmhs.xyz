@@ -1,10 +1,12 @@
 package xyz.gsmhs.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team.themoment.datagsm.sdk.oauth.DataGsmOAuthClient;
 import team.themoment.datagsm.sdk.oauth.exception.DataGsmException;
@@ -71,6 +73,7 @@ public class AuthController {
     @GetMapping("/oauth/callback")
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
+                           HttpServletRequest request,
                            HttpSession session) {
 
         // state 검증 (CSRF 방지)
@@ -104,10 +107,12 @@ public class AuthController {
                     student.getClassNum(),
                     student.getNumber(),
                     student.getStudentNumber(),
-                    String.valueOf(student.getMajor()),
+                    student.getMajor() == null ? "" : String.valueOf(student.getMajor()),
                     email,
                     adminService.isAdmin(email)
             );
+            // 세션 고정(Session Fixation) 방지: 인증 성공 시점에 세션 ID를 회전한다.
+            request.changeSessionId();
             session.setAttribute(SESSION_USER, user);
             recordLogin(user);
 
@@ -119,8 +124,8 @@ public class AuthController {
         }
     }
 
-    /** 로그아웃: 세션 파기 */
-    @GetMapping("/logout")
+    /** 로그아웃: 세션 파기 (CSRF 방지를 위해 POST로만 허용) */
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";

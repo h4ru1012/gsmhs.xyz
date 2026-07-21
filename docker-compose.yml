@@ -1,0 +1,18 @@
+# Synology Container Manager "프로젝트"용 구성.
+# 이 저장소 폴더를 프로젝트 경로로 지정하면 빌드·실행된다.
+services:
+  gsmhs:
+    build: .
+    container_name: gsmhs
+    ports:
+      - "8080:8080"
+    # .env의 값(DATAGSM_*, CF_*, ADMIN_EMAILS)을 컨테이너 환경변수로 주입
+    # → 작업 디렉터리 의존 없이 항상 로드됨
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+      # SQLite DB를 마운트 볼륨에 저장해 컨테이너 재생성에도 데이터 유지
+      GSMHS_DB_PATH: /data/gsmhs.xyz.db
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

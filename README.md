@@ -90,6 +90,21 @@ java -jar build/libs/gsmhs.xyz-0.0.1-SNAPSHOT.jar
   (`server.shutdown: graceful`이라 처리 중 요청은 마치고 종료됨).
 - DB(`gsmhs.xyz.db`)는 실행 디렉터리에 생성됨 — 백업 대상. `GSMHS_DB_PATH`로 경로 지정 가능.
 
+### Synology Container Manager로 실행 (권장)
+
+저장소에 포함된 `Dockerfile` + `docker-compose.yml`로 Container Manager "프로젝트"에서 바로 구동할 수 있다.
+
+1. NAS에 저장소 클론 (SSH 또는 File Station): 예 `/volume1/docker/gsmhs.xyz`
+2. 그 폴더에 `.env` 생성 (`cp .env.example .env` 후 실제 값 입력)
+3. **(기존 데이터 이전 시)** 폴더 안에 `data/` 디렉터리를 만들고 기존 `gsmhs.xyz.db`를 `data/gsmhs.xyz.db`로 복사
+4. 기존 방식(수동 java -jar)으로 돌던 프로세스/컨테이너가 있다면 **8080 포트 충돌 방지를 위해 중지**
+5. Container Manager → **프로젝트 → 생성** → 경로에 위 폴더 지정 → `docker-compose.yml` 자동 인식 → 빌드·실행
+   (첫 빌드는 Gradle 의존성 다운로드 때문에 몇 분 걸림. 이후엔 레이어 캐시로 빨라짐)
+6. 업데이트 배포: 폴더에서 `git pull` → 프로젝트에서 **작업 → 빌드**(재빌드) → 재시작
+
+- DB는 `./data/gsmhs.xyz.db`(호스트 볼륨)에 저장되어 컨테이너를 지워도 유지된다 — 백업 대상.
+- `.env`는 `env_file`로 주입되므로 작업 디렉터리 문제 없이 항상 로드된다.
+
 ### 리버스 프록시 (nginx)
 
 라즈베리파이 nginx → `앱호스트:8080`. HTTPS 종료는 nginx(Let's Encrypt 와일드카드)에서 하고,

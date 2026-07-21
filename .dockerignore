@@ -1,0 +1,10 @@
+.git
+.gradle
+.idea
+build
+data
+*.db
+*.db-journal
+.env
+README.md
+docs

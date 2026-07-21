@@ -400,7 +400,7 @@ function toggleTheme(){var h=document.documentElement,t=h.getAttribute('data-the
     cards.forEach(function(c){
       var pub=c.getAttribute('data-public')==='true';
       var mine=c.getAttribute('data-owned')==='true';
-      var okMode=mode==='all'||(mode==='mine'&&mine&&!pub);
+      var okMode=mode==='all'||(mode==='mine'&&mine);
       var hay=(c.getAttribute('data-search')||c.textContent||'').toLowerCase();
       var okQ=!q||hay.indexOf(q)>-1;
       var show=okMode&&okQ;

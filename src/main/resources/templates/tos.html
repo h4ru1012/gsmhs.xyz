@@ -1,180 +1,274 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이용약관 - gsmhs.xyz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0e1116;
-            --surface: #171c24;
-            --border: #2a3240;
-            --text: #e8ecf1;
-            --muted: #8b95a5;
-            --accent: #4f8cff;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: "Noto Sans KR", "Noto Sans CJK KR", -apple-system, "Segoe UI", sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-        }
-        .page {
-            max-width: 960px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .domain {
-            font-family: inherit;
-            font-size: 15px;
-            color: var(--accent);
-            letter-spacing: 0.04em;
-        }
-        .account {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            color: var(--muted);
-        }
-        .account a { color: var(--muted); text-decoration: none; }
-        .account a:hover { text-decoration: underline; }
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 28px;
-        }
-        h1 { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
-        h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; margin-top: 24px; }
-        p { font-size: 14px; line-height: 1.8; margin-bottom: 16px; color: var(--text); }
-        ul { margin-left: 24px; margin-bottom: 16px; }
-        li { font-size: 14px; line-height: 1.8; margin-bottom: 8px; }
-        .updated { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 24px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: auto;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이용약관 — gsmhs.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0e14;--surface:#121826;--surface-2:#1a2234;--inset:#0d121c;
+  --border:#1f2939;--border-2:#2b3a55;
+  --text:#e8edf6;--text-2:#9aa7bd;--text-3:#7d8aa0;
+  --accent:#6ea6ff;--accent-solid:#2563eb;--accent-solid-2:#3b76f0;--accent-dim:rgba(110,166,255,.1);
+  --green:#3ecf8e;--red:#f47171;--red-dim:rgba(244,113,113,.09);
+  --sans:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'Noto Sans Mono','Noto Sans KR',monospace;
+  --r:14px;--r-s:9px;--ring:0 0 0 3px rgba(110,166,255,.22);
+}
+html{color-scheme:dark}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+main{flex:1;width:100%}
+a{color:var(--accent);text-decoration:none;transition:color .15s}
+a:hover{color:#9dc1ff}
+::selection{background:rgba(80,140,255,.4)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono)}
+.container{width:100%;max-width:1064px;margin:0 auto;padding:0 24px}
+.container-narrow{max-width:648px}
+.container-wide{max-width:1320px}
+.container-prose{max-width:768px}
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:15.5px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.brand:hover{color:var(--text)}
+.brand-mark{width:11px;height:11px;border-radius:3px;background:linear-gradient(135deg,#8cb8ff,#2563eb);box-shadow:0 0 12px rgba(80,140,255,.55)}
+.brand-tld{color:var(--accent)}
+.brand-side{display:inline-flex;align-items:center;gap:10px}
+.mode-chip{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--accent);border:1px solid rgba(110,166,255,.35);background:var(--accent-dim);padding:2px 8px;border-radius:6px}
+.header-nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.user-chip{display:flex;align-items:center;gap:14px;font-size:13.5px}
+.user-name{font-weight:700;display:inline-flex;align-items:center;gap:7px}
+.user-name::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
+.nav-link{color:var(--text-2);font-size:13.5px}
+.nav-link:hover{color:var(--text)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid transparent;border-radius:var(--r-s);font-family:var(--sans);font-weight:700;font-size:14px;line-height:1.5;padding:9px 18px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--accent-solid);color:#fff}
+.btn-primary:hover{background:var(--accent-solid-2);color:#fff}
+.btn-lg{font-size:15.5px;padding:13px 28px;border-radius:11px}
+.btn-sm{font-size:13px;padding:6px 14px}
+.btn-xs{font-size:12px;padding:4px 11px;border-radius:7px}
+.btn-ghost{background:transparent;border-color:var(--border-2);color:var(--text-2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text);background:var(--accent-dim)}
+.btn-danger{background:transparent;border-color:rgba(244,113,113,.35);color:var(--red)}
+.btn-danger:hover{background:var(--red-dim);color:var(--red)}
+/* alert / badge */
+.alert{display:flex;gap:11px;align-items:flex-start;border:1px solid rgba(244,113,113,.35);background:var(--red-dim);border-radius:var(--r-s);padding:13px 16px;margin-top:24px;font-size:14px;color:#ffc9c9}
+.alert-icon{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;background:rgba(244,113,113,.18);color:var(--red);font-weight:700;font-size:12px;display:grid;place-items:center;font-family:var(--mono)}
+.badge{flex:none;display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2.5px 9px;border-radius:999px;letter-spacing:.02em;line-height:1.6}
+.badge-private{color:var(--text-2);background:rgba(154,167,189,.12);border:1px solid rgba(154,167,189,.3)}
+.badge-public{color:var(--green);background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.3)}
+/* hero */
+.hero{position:relative;padding:82px 24px 58px;text-align:center}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(140,170,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(140,170,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,#000 25%,transparent 72%);pointer-events:none}
+.hero>*{position:relative}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-2);border:1px solid var(--border-2);border-radius:999px;padding:5px 14px;background:rgba(18,24,38,.7)}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(62,207,142,.7)}
+.hero-title{font-size:clamp(30px,5.4vw,49px);font-weight:900;line-height:1.24;letter-spacing:-.035em;margin:22px 0 16px}
+.hero-title .grad{font-family:var(--mono);font-weight:700;font-size:.94em;letter-spacing:-.045em;background:linear-gradient(100deg,#d3e2ff 10%,#6ea6ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:540px;margin:0 auto 30px;color:var(--text-2);font-size:16px;text-wrap:pretty}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin-bottom:46px}
+.dns-demo{display:inline-flex;align-items:center;gap:14px;padding:13px 20px;background:var(--inset);border:1px solid var(--border);border-radius:11px;font-family:var(--mono);font-size:13.5px;box-shadow:0 16px 44px rgba(0,0,0,.42);flex-wrap:wrap;justify-content:center}
+.dns-type{color:var(--green);font-weight:700;font-size:10.5px;letter-spacing:.1em;border:1px solid rgba(62,207,142,.3);padding:2px 8px;border-radius:5px;background:rgba(62,207,142,.08)}
+.dns-name{color:var(--text)}.dns-name b{color:var(--text-3);font-weight:400}
+.dns-arrow{color:var(--text-3)}
+.dns-target{color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;list-style:none;max-width:860px;margin:50px auto 0;text-align:left}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.step-num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700;letter-spacing:.12em}
+.step b{display:block;font-size:14.5px;margin:8px 0 3px}
+.step p{font-size:13px;color:var(--text-2);line-height:1.55}
+/* logged-in card */
+.me-card{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px 28px;margin-top:36px}
+.me-name{font-size:22px;font-weight:900;letter-spacing:-.02em;line-height:1.35}
+.me-meta{color:var(--text-2);font-size:13.5px;margin-top:2px}
+/* projects */
+.section-head{display:flex;align-items:baseline;gap:10px;margin:54px 0 18px}
+.section-title{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.count-chip{font-family:var(--mono);font-size:12px;color:var(--text-2);border:1px solid var(--border-2);padding:1px 9px;border-radius:999px;background:var(--surface)}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.project-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .15s}
+.project-card:hover{border-color:var(--border-2)}
+.card-top{display:flex;align-items:center;gap:9px;justify-content:space-between}
+.card-title{font-size:16px;font-weight:700;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-domain{font-family:var(--mono);font-size:13px;display:inline-flex;align-items:center;gap:6px;width:fit-content;max-width:100%}
+.card-domain::after{content:'\2197';font-size:11px;color:var(--text-3)}
+.card-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-foot{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;flex-wrap:wrap}
+.card-owner{color:var(--text-3);font-weight:500}
+.card-gh{font-family:var(--mono);font-size:11.5px;color:var(--text-2)}
+.card-btns{margin-left:auto;display:flex;gap:6px;align-items:center}
+.card-btns form{display:inline-flex;margin:0}
+.empty{border:1.5px dashed var(--border-2);border-radius:var(--r);padding:56px 24px;text-align:center;margin-top:16px}
+.empty-mono{font-family:var(--mono);font-size:11.5px;color:var(--text-3);letter-spacing:.14em}
+.empty b{display:block;font-size:16px;margin:10px 0 4px}
+.empty p{font-size:13.5px;color:var(--text-2)}
+/* form */
+.back-link{display:inline-block;margin:36px 0 14px;font-size:13.5px;color:var(--text-2)}
+.page-head{margin:44px 0 26px}
+.page-title{font-size:27px;font-weight:900;letter-spacing:-.02em}
+.page-sub{color:var(--text-2);font-size:14.5px;margin-top:6px;text-wrap:pretty}
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:30px;margin:26px 0 64px;display:flex;flex-direction:column;gap:22px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-label{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+.req{color:var(--accent)}
+.opt{font-size:10.5px;color:var(--text-3);font-weight:500;border:1px solid var(--border);padding:0 7px;border-radius:999px}
+.control{width:100%;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);color:var(--text);font-family:var(--sans);font-size:14.5px;padding:10px 13px;transition:border-color .15s,box-shadow .15s}
+.control::placeholder{color:var(--text-3)}
+.control:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
+textarea.control{resize:vertical;min-height:88px;line-height:1.6}
+.subdomain-group{display:flex;align-items:stretch}
+.subdomain-group .control{border-radius:var(--r-s) 0 0 var(--r-s);font-family:var(--mono);font-size:14px}
+.suffix{display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border:1px solid var(--border-2);border-left:0;border-radius:0 var(--r-s) var(--r-s) 0;color:var(--text-2);font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+.hint{font-size:12.5px;color:var(--text-3);line-height:1.6}
+.hint code{font-family:var(--mono);color:var(--text-2);background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:11.5px}
+.preview-line{font-family:var(--mono);font-size:12.5px;color:var(--text-3)}
+.preview-line b{color:var(--accent);font-weight:500}
+.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radio-card{display:flex;gap:11px;align-items:flex-start;background:var(--inset);border:1px solid var(--border-2);border-radius:var(--r-s);padding:13px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.radio-card input{margin-top:4px;accent-color:var(--accent-solid);width:15px;height:15px;flex:none}
+.radio-card b{display:block;font-size:14px}
+.radio-card small{display:block;font-size:12px;color:var(--text-3);margin-top:1px;line-height:1.5}
+.radio-card:has(input:checked){border-color:var(--accent);background:var(--accent-dim)}
+.form-actions{display:flex;gap:10px;border-top:1px solid var(--border);padding-top:22px}
+/* admin */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:44px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 18px}
+.stat-label{font-size:12px;color:var(--text-3);font-weight:600}
+.stat-value{font-family:var(--mono);font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
+.stat-on{color:var(--green)}.stat-off{color:var(--red)}
+.admin-section{margin-bottom:48px}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow-x:auto}
+.table-wrap::-webkit-scrollbar{height:8px}
+.table-wrap::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+.data-table th{font-size:11.5px;color:var(--text-3);font-weight:700;letter-spacing:.04em;text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);background:rgba(13,18,28,.6)}
+.data-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.data-table tbody tr:last-child td{border-bottom:0}
+.data-table tbody tr:hover{background:rgba(140,170,255,.03)}
+.data-table form{display:inline-flex;margin:0}
+.tbl-users{min-width:940px}
+.tbl-projects{min-width:1280px}
+.cell-strong{font-weight:700}
+.cell-mono{font-family:var(--mono);font-size:12.5px}
+.cell-dim{color:var(--text-3)}
+.cell-desc{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.owner-email{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:1px}
+/* prose */
+.doc-head{margin:52px 0 34px;padding-bottom:26px;border-bottom:1px solid var(--border)}
+.doc-eyebrow{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.16em;font-weight:700}
+.doc-title{font-size:32px;font-weight:900;letter-spacing:-.02em;margin-top:10px}
+.doc-meta{font-size:12.5px;color:var(--text-3);margin-top:10px;font-family:var(--mono)}
+.prose{padding-bottom:28px}
+.prose h2{font-size:17.5px;font-weight:800;margin:34px 0 12px;letter-spacing:-.01em}
+.prose p{font-size:14.5px;color:var(--text-2);margin-bottom:10px;line-height:1.8;text-wrap:pretty}
+.prose ol,.prose ul{margin:0 0 12px;padding-left:22px;color:var(--text-2);font-size:14.5px;line-height:1.8}
+.prose li{margin-bottom:5px}
+.prose strong{color:var(--text)}
+.prose .table-wrap{margin:16px 0 20px}
+.prose .data-table{white-space:normal;min-width:620px}
+.prose .data-table td{font-size:13px;color:var(--text-2);line-height:1.6}
+/* footer */
+.site-footer{border-top:1px solid var(--border);margin-top:72px;background:rgba(13,17,26,.5)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:26px 24px;flex-wrap:wrap}
+.copyright{font-size:12px;color:var(--text-3);font-family:var(--mono)}
+.footer-nav{display:flex;gap:22px;font-size:13px}
+.footer-nav a{color:var(--text-2)}
+.footer-nav a:hover{color:var(--text)}
+@media (max-width:720px){
+  .hero{padding:56px 16px 44px}
+  .steps{grid-template-columns:1fr;margin-top:38px}
+  .me-card{padding:22px}
+  .form-card{padding:22px 18px}
+  .radio-row{grid-template-columns:1fr}
+  .footer-inner{justify-content:center;text-align:center}
+  .section-head{margin-top:42px}
+}
+</style>
 </head>
 <body>
-<div class="page">
-    <header>
-        <span class="domain">gsmhs.xyz</span>
-        <div class="account" th:if="${user != null}">
-            <span th:text="${user.displayName}">1학년 1반 1번 홍길동</span>
-            <a href="/admin" th:if="${user.admin}">관리자</a>
-            <a href="/logout">로그아웃</a>
-        </div>
-        <div class="account" th:if="${user == null}">
-            <a href="/login">DataGSM으로 로그인</a>
-        </div>
-    </header>
-
-    <main class="card">
-        <h1>이용약관</h1>
-        <p class="updated">최종 업데이트: 2026년 7월</p>
-
-        <h2>제1조 총칙</h2>
-        <p>본 약관은 gsmhs.xyz(이하 "서비스")의 이용에 관한 기본적인 사항을 규정합니다. 서비스 이용자(이하 "이용자")는 본 약관에 동의함으로써 서비스를 이용하는 것으로 간주됩니다.</p>
-
-        <h2>제2조 서비스 설명</h2>
-        <p>본 서비스는 광주소프트웨어마이스터고등학교 학생들이 개인 서브도메인을 등록하고, 이를 GitHub Pages와 연동하여 웹 포트폴리오 또는 프로젝트를 호스팅할 수 있는 플랫폼입니다.</p>
-        <ul>
-            <li>DataGSM OAuth를 통한 학생 계정 인증</li>
-            <li>서브도메인 자동 등록 및 DNS 설정</li>
-            <li>GitHub Pages 연동 및 CNAME 설정</li>
-            <li>프로젝트 관리 및 공개/비공개 설정</li>
-        </ul>
-
-        <h2>제3조 이용 자격</h2>
-        <p>본 서비스는 다음의 자격을 갖춘 사용자만 이용할 수 있습니다.</p>
-        <ul>
-            <li>광주소프트웨어마이스터고등학교 재학 중인 학생</li>
-            <li>유효한 DataGSM 계정을 보유한 자</li>
-            <li>본 약관과 개인정보 보호정책에 동의한 자</li>
-        </ul>
-
-        <h2>제4조 금지사항</h2>
-        <p>이용자는 다음의 행위를 할 수 없습니다.</p>
-        <ul>
-            <li>타인의 계정을 무단으로 사용하는 행위</li>
-            <li>서비스 인프라에 해를 끼치거나 부하를 주는 행위</li>
-            <li>불법적인 콘텐츠나 자료를 호스팅하는 행위</li>
-            <li>타인의 권리를 침해하는 콘텐츠 배포</li>
-            <li>서비스 이용 약관을 위반하는 모든 행위</li>
-            <li>학교 운영에 방해가 되는 서브도메인명 등록</li>
-        </ul>
-
-        <h2>제5조 서비스 제공 및 변경</h2>
-        <p>관리자는 서비스의 안정성과 개선을 위해 서비스의 내용을 예고 없이 변경할 수 있습니다. 다만, 중대한 변경의 경우 이전에 공지할 수 있습니다.</p>
-
-        <h2>제6조 이용자의 책임</h2>
-        <p>이용자는 자신의 GitHub Pages 호스팅 내용에 대해 전적인 책임을 지며, 서비스 관리자는 호스팅되는 콘텐츠에 대해 책임을 지지 않습니다. 서비스는 단순히 DNS와 CNAME을 설정해주는 역할만 수행합니다.</p>
-
-        <h2>제7조 책임 제한</h2>
-        <p>본 서비스는 현재 상태 그대로("AS-IS") 제공되며, 명시적 또는 묵시적인 보증이나 조건을 포함하지 않습니다. 관리자는 다음에 대해 책임을 지지 않습니다.</p>
-        <ul>
-            <li>서비스 중단 또는 오류로 인한 손실</li>
-            <li>데이터 손실 또는 손상</li>
-            <li>이용자의 부주의로 인한 피해</li>
-            <li>외부 서비스(GitHub, Cloudflare 등)의 장애</li>
-        </ul>
-
-        <h2>제8조 약관 종료</h2>
-        <p>이용자는 언제든지 서비스 이용을 중단할 수 있습니다. 서비스 관리자는 약관 위반 시 이용자의 계정을 정지하거나 삭제할 수 있습니다.</p>
-
-        <h2>제9조 약관 변경</h2>
-        <p>관리자는 필요에 따라 약관을 변경할 수 있으며, 변경사항은 서비스 내에서 공지합니다. 변경된 약관에 동의하지 않으면 서비스 이용을 중단할 수 있습니다.</p>
-
-        <h2>제10조 준거법</h2>
-        <p>본 약관은 대한민국 법을 준거법으로 합니다.</p>
-    </main>
-</div>
-
-<footer>
-    <div class="footer-links">
-        <a href="/">홈</a>
-        <a href="/tos">이용약관</a>
-        <a href="/privacy">개인정보 보호정책</a>
+<header class="site-header"><div class="container header-inner">
+    <span class="brand-side"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>gsmhs<span class="brand-tld">.xyz</span></a></span>
+    <nav class="header-nav">
+      <div class="user-chip" th:if="${user != null}">
+        <span class="user-name" th:text="${user.displayName}">김수한</span>
+        <a class="nav-link" th:if="${user.admin}" href="/admin">관리자</a>
+        <a class="nav-link" href="/logout">로그아웃</a>
+      </div>
+      <a class="btn btn-primary btn-sm" th:if="${user == null}" href="/login">DataGSM으로 로그인</a>
+    </nav>
+  </div></header>
+<main>
+  <div class="container container-prose">
+    <div class="doc-head">
+      <p class="doc-eyebrow">TERMS OF SERVICE</p>
+      <h1 class="doc-title">이용약관</h1>
+      <p class="doc-meta">시행일 2026-03-01</p>
     </div>
-    <p>&copy; 2026 gsmhs.xyz. All rights reserved.</p>
-</footer>
+    <!-- TODO: 아래 본문은 초안입니다. 운영 중인 실제 약관 조항으로 교체하세요. 레이아웃(h2/p/ol)만 유지하면 됩니다. -->
+    <article class="prose">
+      <h2>제1조 (목적)</h2>
+      <p>이 약관은 gsmhs.xyz(이하 "서비스")가 제공하는 서브도메인 등록 및 연결 기능의 이용 조건과 절차, 이용자와 운영자의 권리·의무를 규정함을 목적으로 합니다.</p>
+      <h2>제2조 (정의)</h2>
+      <ol>
+        <li>"서비스"란 광주소프트웨어마이스터고등학교 구성원이 <strong>이름.gsmhs.xyz</strong> 형태의 서브도메인을 등록하고 GitHub Pages, Vercel 등 외부 호스팅에 연결할 수 있도록 제공되는 기능 일체를 말합니다.</li>
+        <li>"이용자"란 DataGSM 계정으로 로그인하여 이 약관에 따라 서비스를 이용하는 사람을 말합니다.</li>
+        <li>"프로젝트"란 이용자가 등록한 서브도메인과 그에 연결된 정보(이름, 설명, CNAME 대상 등)를 말합니다.</li>
+      </ol>
+      <h2>제3조 (약관의 효력 및 변경)</h2>
+      <ol>
+        <li>이 약관은 서비스 화면에 게시함으로써 효력이 발생합니다.</li>
+        <li>운영자는 필요한 경우 약관을 변경할 수 있으며, 변경된 약관은 게시한 때부터 효력이 발생합니다.</li>
+        <li>변경된 약관에 동의하지 않는 이용자는 서비스 이용을 중단하고 등록한 프로젝트의 삭제를 요청할 수 있습니다.</li>
+      </ol>
+      <h2>제4조 (서비스 이용)</h2>
+      <ol>
+        <li>서비스는 DataGSM 계정을 보유한 광주소프트웨어마이스터고 구성원만 이용할 수 있습니다.</li>
+        <li>서비스는 무료로 제공됩니다.</li>
+        <li>운영 사정에 따라 1인당 등록 가능한 서브도메인 수가 제한될 수 있습니다.</li>
+      </ol>
+      <h2>제5조 (서브도메인 등록 및 운영)</h2>
+      <ol>
+        <li>서브도메인은 영문 소문자, 숫자, 하이픈(-)만 사용할 수 있으며 선착순으로 등록됩니다.</li>
+        <li>타인·기관을 사칭할 우려가 있는 문자열, 욕설·비속어 등 부적절한 문자열, 서비스 운영에 예약된 문자열(www, admin 등)은 등록이 거부되거나 사전 통지 없이 회수될 수 있습니다.</li>
+        <li>DNS 레코드는 Cloudflare를 통해 생성되며, 실제 사이트 콘텐츠는 이용자가 연결한 외부 호스팅에서 제공됩니다.</li>
+      </ol>
+      <h2>제6조 (이용자의 의무)</h2>
+      <ol>
+        <li>이용자는 불법 정보, 타인의 권리를 침해하는 콘텐츠, 청소년에게 유해한 콘텐츠를 게시하거나 연결해서는 안 됩니다.</li>
+        <li>이용자는 학교 또는 서비스의 공식 채널로 오인될 수 있는 사이트를 운영해서는 안 됩니다.</li>
+        <li>이용자는 자신의 계정과 프로젝트를 선량한 관리자의 주의로 관리해야 합니다.</li>
+        <li>서비스를 상업적 목적으로 남용해서는 안 됩니다.</li>
+      </ol>
+      <h2>제7조 (이용 제한 및 프로젝트 삭제)</h2>
+      <ol>
+        <li>운영자는 이용자가 이 약관을 위반한 경우 사전 통지 없이 해당 프로젝트를 삭제하거나 서비스 이용을 제한할 수 있습니다.</li>
+        <li>졸업·전출 등으로 구성원 자격을 상실한 경우, 등록된 서브도메인은 일정 기간 후 회수될 수 있습니다.</li>
+        <li>장기간 연결이 유효하지 않은 서브도메인은 정리될 수 있습니다.</li>
+      </ol>
+      <h2>제8조 (서비스의 변경 및 중단)</h2>
+      <p>서비스는 무상으로 제공되며, 운영상·기술상 필요에 따라 예고 후 변경되거나 중단될 수 있습니다. 긴급한 사정이 있는 경우 사전 예고 없이 중단될 수 있습니다.</p>
+      <h2>제9조 (면책)</h2>
+      <ol>
+        <li>운영자는 이용자가 연결한 외부 호스팅(GitHub Pages, Vercel 등)의 장애나 그 콘텐츠에 대해 책임지지 않습니다.</li>
+        <li>이용자가 게시한 콘텐츠로 인해 발생하는 분쟁의 책임은 해당 이용자에게 있습니다.</li>
+      </ol>
+      <h2>제10조 (문의)</h2>
+      <p>서비스 이용과 관련한 문의는 서비스 관리자에게 할 수 있습니다.</p>
+      <h2>부칙</h2>
+      <p>이 약관은 2026년 3월 1일부터 시행합니다.</p>
+    </article>
+  </div>
+</main>
+<footer class="site-footer"><div class="container footer-inner">
+    <p class="copyright">&copy; 2026 gsmhs.xyz. All rights reserved.</p>
+    <nav class="footer-nav"><a href="/">홈</a><a href="/tos">이용약관</a><a href="/privacy">개인정보 보호정책</a></nav>
+  </div></footer>
+
 </body>
 </html>
